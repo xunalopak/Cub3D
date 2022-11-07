@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: rchampli <rchampli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 23:35:12 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/04 12:07:07 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/07 12:08:19 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	ft_parse_color(char **temp)
 	b = ft_atoi(rgb[2]);
 	if (r < 0 || r > 255 || g < 0 || g > 255
 		|| b < 0 || b > 255)
+		ft_error("Bad color settings");
 	color = ((r << 16) + (g << 8) + b);
 	free_matrix(rgb);
 	return (color);
@@ -161,7 +162,7 @@ void	ft_parse(char *line, int n)
 void	map_size_process(char *line, int *n)
 {
 	if (map.flag)
-		ft_error("Invalid map!");
+		ft_error("Invalid map");
 	if (*n < 6)
 		(*n)++;
 	else if (ft_strlen(line) > map.width)
@@ -170,6 +171,7 @@ void	map_size_process(char *line, int *n)
 		map.height++;
 		(*n)++;
 	}
+	printf("Map height: %d, Map width : %d\n", map.height, map.width);
 }
 
 void	map_size(char *file)
@@ -211,7 +213,6 @@ void	ft_map(void)
 			ft_error("Malloc failed");
 		i++;
 	}
-	printf("ok");
 }
 
 void	parse(char *file)
@@ -226,7 +227,7 @@ void	parse(char *file)
 	{
 		if (!ft_is_empty(line))
 		{
-			if (n == 6)
+			if (n == 5)
 			{
 				map_size(file);
 				ft_map();

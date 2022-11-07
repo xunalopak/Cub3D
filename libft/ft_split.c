@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: rchampli <rchampli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 12:16:51 by rchampli          #+#    #+#             */
-/*   Updated: 2022/10/23 09:52:03 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/07 11:15:42 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,6 @@ char	**free_machine(char **s, int idx)
 		free(s[idx]);
 		s[idx] = NULL;
 		idx--;
-	}
-	free(s);
-	s = NULL;
-	return (NULL);
-}
-
-char	**free_matrix(char **s)
-{
-	int	idx;
-
-	idx = -1;
-	while (s[++idx] != NULL)
-	{
-		free(s[idx]);
-		s[idx] = NULL;
 	}
 	free(s);
 	s = NULL;
