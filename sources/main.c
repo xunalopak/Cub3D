@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rchampli <rchampli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 23:35:12 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/07 12:08:19 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/08 15:53:10 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	destroy_map(void)
 	i = 0;
 	while (i < map.height)
 	{
-		free(map.map[i++]);
+		free(map.map[i]);
+		i++;
 	}
 	free(map.map);
 }
@@ -123,10 +124,10 @@ void	fill_map(char *line, int n)
 
 	i = 0;
 	while (line[i])
-		{
-			map.map[n][i] = line[i];
-			i++;
-		}
+	{
+		map.map[n][i] = line[i];
+		i++;
+	}
 	while (i < map.width)
 	{
 		map.map[n][i] = ' ';
@@ -171,7 +172,101 @@ void	map_size_process(char *line, int *n)
 		map.height++;
 		(*n)++;
 	}
-	printf("Map height: %d, Map width : %d\n", map.height, map.width);
+}
+
+void	check1(char *line)
+{
+	if (!line)
+		ft_error("Invalid map");
+	while (*line)
+	{
+		if (*line != '1' && *line != ' ' && *line != '\0')
+			ft_error("Invalid map");
+		line++;
+	}
+}
+
+void	check2(char c)
+{
+	if (c != ' ' && c != '1' && c != '0' && c != 'N' && c != 'W'
+		&& c != 'E' && c != 'S')
+		ft_error("Invalid map");
+}
+
+void	check3(int i, int j)
+{
+	if (i - 1 >= 0 && i - 1 < map.height)
+		if (map.map[i - 1][j] != ' ' && map.map[i - 1][j] != '1'
+			&& map.map[i - 1][j] != '\0')
+			ft_error("Invalid map");
+	if (i + 1 >= 0 && i + 1 < map.height)
+		if (map.map[i + 1][j] != ' ' && map.map[i + 1][j] != '1'
+			&& map.map[i + 1][j] != '\0')
+			ft_error("Invalid map");
+	if (j - 1 >= 0 && j - 1 < map.width)
+		if (map.map[i][j - 1] != ' ' && map.map[i][j - 1] != '1'
+			&& map.map[i + 1][j] != '\0')
+			ft_error("Invalid map");
+	if (j + 1 >= 0 && j + 1 < map.width)
+		if (map.map[i][j + 1] != ' ' && map.map[i][j + 1] != '1'
+			&& map.map[i + 1][j] != '\0')
+			ft_error("Invalid map");
+}
+
+void	parse_m2(int i, int j)
+{
+	check2(map.map[i][j]);
+	if (j == 0 || j == map.width - 1)
+		if (map.map[i][j] != '1' || map.map[i][j] != ' ')
+			ft_error("Invalid map");
+	if (map.map[i][j] == 'N' || map.map[i][j] == 'E'
+		|| map.map[i][j] == 'W' || map.map[i][j] == 'S')
+		{
+			player.count++;
+			if (player.count == 1)
+			{
+				player.x = i;
+				player.y = j;
+				player.dir_symbol = map.map[i][j];
+			}
+			map.map[i][j] = '0';
+		}
+		if (map.map[i][j])
+			check3(i, j);
+}
+
+int		parse_m(void)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < map.height)
+	{
+		if (i == 0 || i == map.height - 1)
+			check1(map.map[i]);
+		j = 0;
+		while (map.map[i][j])
+		{
+			parse_m2(i, j);
+			j++;
+		}
+		i++;
+	}
+	if (player.count == 0)
+		ft_error("No player");
+	return (0);
+}
+
+void	parse_map(char *line, int fd)
+{
+	if (close(fd) == -1)
+		ft_error("Close error");
+	if (map.count != 6)
+		ft_error("Verify .cub file");
+	if (parse_m())
+		ft_error("Invalid map");
+	free(line);
 }
 
 void	map_size(char *file)
@@ -195,7 +290,7 @@ void	map_size(char *file)
 	if (map.gnl)
 		map.height++;
 	free(line);
-	close(fd);
+	parse_map(line, fd);
 }
 
 void	ft_map(void)
@@ -203,12 +298,12 @@ void	ft_map(void)
 	int	i;
 
 	i = 0;
-	map.map = (char **)malloc(sizeof(char *) * (map.height + 1));
+	map.map = malloc(sizeof(char *) * (map.height + 1));
 	if (!map.map)
 		ft_error("Malloc failed");
 	while (i < map.height)
 	{
-		map.map[i] = (char *)malloc(sizeof(char) * (map.width + 1));
+		map.map[i] = malloc(sizeof(char) * (map.width + 1));
 		if (!map.map[i])
 			ft_error("Malloc failed");
 		i++;
@@ -234,12 +329,11 @@ void	parse(char *file)
 			}
 			ft_parse(line, n);
 			n++;
-			printf("no: %s so: %s we: %s ea: %s f: %i c: %i \n", map.fd_no, map.fd_so, map.fd_we, map.fd_ea, map.floor, map.ceiling);
 		}
 		if (line)
 			free(line);
 	}
-	close(fd);
+	parse_map(line, fd);
 }
 
 int	main(int ac, char **av)

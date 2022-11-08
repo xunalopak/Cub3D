@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 03:58:15 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/04 10:20:43 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/08 15:15:11 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,21 @@ struct s_path
 	int		we;
 	int		ea;
 }				t_path;
+
+struct 				s_player
+{
+	double			x;
+	double			y;
+	double			dir_x;
+	double			dir_y;
+	double			plane_x;
+	double			plane_y;
+	double			dir;
+	char			dir_symbol;
+	int				count;
+	int				move;
+}					player;
+
 
 struct				s_map
 {
