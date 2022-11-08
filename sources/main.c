@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 23:35:12 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/08 15:53:10 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/08 23:39:39 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ int	parse_texture(char **temp)
 		return (1);
 	map.n++;
 	free_matrix(temp);
+	map.count = 6;
 	return (0);
 }
 
@@ -180,8 +181,8 @@ void	check1(char *line)
 		ft_error("Invalid map");
 	while (*line)
 	{
-		if (*line != '1' && *line != ' ' && *line != '\0')
-			ft_error("Invalid map");
+		if (*line != ' ' && *line != '1' && *line != '\0')
+			ft_error("Invalid map!");
 		line++;
 	}
 }
@@ -290,7 +291,7 @@ void	map_size(char *file)
 	if (map.gnl)
 		map.height++;
 	free(line);
-	parse_map(line, fd);
+	close(fd);
 }
 
 void	ft_map(void)
