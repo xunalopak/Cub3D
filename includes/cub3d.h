@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 03:58:15 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/08 15:15:11 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/09 16:15:59 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,6 @@ typedef struct s_win
 	int		width;
 	int		height;
 }				t_win;
-
-struct s_path
-{
-	char	*north;
-	char	*south;
-	char	*west;
-	char	*east;
-	int 	no;
-	int		so;
-	int		we;
-	int		ea;
-}				t_path;
 
 struct 				s_player
 {
@@ -86,10 +74,29 @@ struct				s_map
 	int				flag;
 }					map;
 
-
-
-int		get_next_line(int fd, char **line);
+//Parsing
+void	parse(char *file);
+void	parse_map(char *line, int fd);
+int		parse_m(void);
+void	parse_m2(int i, int j);
+void	ft_parse(char *line, int n);
+void	fill_map(char *line, int n);
+int		parse_texture(char **temp);
 int		parse_texture2(char **temp);
+int		ft_parse_color(char **temp);
+void	ft_map(void);
+void	map_size(char *file);
+void	map_size_process(char *line, int *n);
+
+//Checker for parsing
+void	check1(char *line);
+void	check2(char c);
+void	check3(int i, int j);
+
+//Get next line
+int		get_next_line(int fd, char **line);
+
+//Free and exit
 void	cleanup(void);
 
 #endif
