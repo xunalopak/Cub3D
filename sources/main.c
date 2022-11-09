@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 23:35:12 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/08 23:39:39 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/09 12:06:08 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	parse_texture2(char **temp)
 		map.fd_ea = ft_strdup(temp[1]);
 	else if (temp[0][0] == 'F' && temp[0][1] == '\0')
 	{
-		if (map.f == 1)
+		if (map.f >= 1)
 			ft_error("Duplicate F");
 		map.floor = ft_parse_color(temp);
 		map.f++;
@@ -112,8 +112,7 @@ int	parse_texture2(char **temp)
 int	parse_texture(char **temp)
 {
 	if (parse_texture2(temp))
-		return (1);
-	map.n++;
+			return (1);
 	free_matrix(temp);
 	map.count = 6;
 	return (0);
@@ -123,12 +122,9 @@ void	fill_map(char *line, int n)
 {
 	int	i;
 
-	i = 0;
-	while (line[i])
-	{
+	i = -1;
+	while (line[++i] != '\0')
 		map.map[n][i] = line[i];
-		i++;
-	}
 	while (i < map.width)
 	{
 		map.map[n][i] = ' ';
@@ -141,7 +137,7 @@ void	ft_parse(char *line, int n)
 {
 	char	**temp;
 
-	if (n <= 5)
+	if (n >= 0 && n <= 5)
 	{
 		temp = ft_split(line, ' ');
 		if (temp[2] != NULL)
@@ -154,6 +150,7 @@ void	ft_parse(char *line, int n)
 			free_matrix(temp);
 			ft_error("Invalid line of texture!");
 		}
+		return ;
 	}
 	else if (n > 5)
 		fill_map(line, n - 6);
@@ -167,9 +164,10 @@ void	map_size_process(char *line, int *n)
 		ft_error("Invalid map");
 	if (*n < 6)
 		(*n)++;
-	else if (ft_strlen(line) > map.width)
+	else 
 	{
-		map.width = ft_strlen(line);
+		if (ft_strlen(line) > map.width)
+			map.width = ft_strlen(line);
 		map.height++;
 		(*n)++;
 	}
@@ -182,7 +180,7 @@ void	check1(char *line)
 	while (*line)
 	{
 		if (*line != ' ' && *line != '1' && *line != '\0')
-			ft_error("Invalid map!");
+			ft_error("Invalid map");
 		line++;
 	}
 }
@@ -196,43 +194,44 @@ void	check2(char c)
 
 void	check3(int i, int j)
 {
+
 	if (i - 1 >= 0 && i - 1 < map.height)
 		if (map.map[i - 1][j] != ' ' && map.map[i - 1][j] != '1'
 			&& map.map[i - 1][j] != '\0')
-			ft_error("Invalid map");
+			ft_error("Invalid map1");
 	if (i + 1 >= 0 && i + 1 < map.height)
 		if (map.map[i + 1][j] != ' ' && map.map[i + 1][j] != '1'
 			&& map.map[i + 1][j] != '\0')
-			ft_error("Invalid map");
+				ft_error("Invalid map2");
 	if (j - 1 >= 0 && j - 1 < map.width)
 		if (map.map[i][j - 1] != ' ' && map.map[i][j - 1] != '1'
 			&& map.map[i + 1][j] != '\0')
-			ft_error("Invalid map");
+			ft_error("Invalid map3");
 	if (j + 1 >= 0 && j + 1 < map.width)
 		if (map.map[i][j + 1] != ' ' && map.map[i][j + 1] != '1'
 			&& map.map[i + 1][j] != '\0')
-			ft_error("Invalid map");
+			ft_error("Invalid map4");
 }
 
 void	parse_m2(int i, int j)
 {
 	check2(map.map[i][j]);
 	if (j == 0 || j == map.width - 1)
-		if (map.map[i][j] != '1' || map.map[i][j] != ' ')
+		if (map.map[i][j] != ' ' && map.map[i][j] != '1')
 			ft_error("Invalid map");
-	if (map.map[i][j] == 'N' || map.map[i][j] == 'E'
-		|| map.map[i][j] == 'W' || map.map[i][j] == 'S')
+	if (map.map[i][j] == 'N' || map.map[i][j] == 'W'
+		|| map.map[i][j] == 'E' || map.map[i][j] == 'S')
+	{
+		player.count++;
+		if (player.count == 1)
 		{
-			player.count++;
-			if (player.count == 1)
-			{
-				player.x = i;
-				player.y = j;
-				player.dir_symbol = map.map[i][j];
-			}
-			map.map[i][j] = '0';
+			player.x = j;
+			player.y = i;
+			player.dir_symbol = map.map[i][j];
 		}
-		if (map.map[i][j])
+		map.map[i][j] = '0';
+	}
+	if (map.map[i][j] == ' ')
 			check3(i, j);
 }
 
@@ -272,8 +271,8 @@ void	parse_map(char *line, int fd)
 
 void	map_size(char *file)
 {
-	int	fd;
-	int	n;
+	int		fd;
+	int		n;
 	char	*line;
 	
 	n = 0;
@@ -281,9 +280,7 @@ void	map_size(char *file)
 	while (get_next_line(fd, &line) > 0)
 	{
 		if (!ft_is_empty(line))
-		{
 			map_size_process(line, &n);
-		}
 		else if (n > 6)
 			map.flag = 1;
 		free(line);
@@ -299,12 +296,12 @@ void	ft_map(void)
 	int	i;
 
 	i = 0;
-	map.map = malloc(sizeof(char *) * (map.height + 1));
+	map.map = malloc((map.height + 1) * sizeof(char *));
 	if (!map.map)
 		ft_error("Malloc failed");
 	while (i < map.height)
 	{
-		map.map[i] = malloc(sizeof(char) * (map.width + 1));
+		map.map[i] = malloc((map.width + 1) * sizeof(char *));
 		if (!map.map[i])
 			ft_error("Malloc failed");
 		i++;
@@ -319,7 +316,7 @@ void	parse(char *file)
 
 	n = 0;
 	fd = ft_open(file);
-	while (get_next_line(fd, &line) > 0)
+	while (get_next_line(fd, &line))
 	{
 		if (!ft_is_empty(line))
 		{
@@ -348,5 +345,6 @@ int	main(int ac, char **av)
 		ft_error("Wrong file extension");
 	}
 	parse(av[1]);
+	printf("R: %d %d\n", map.width, map.height);
 	cleanup();
 }

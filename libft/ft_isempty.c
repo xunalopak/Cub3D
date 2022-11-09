@@ -6,22 +6,21 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 11:10:54 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/02 11:29:19 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/09 00:33:20 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_is_empty(char *line)
+int	ft_is_empty(char *str)
 {
-	int	i;
-
-	i = 0;
-	while (line[i])
+	if (!str)
+		return (1);
+	while (*str)
 	{
-		if (ft_is_space(line[i]))
+		if (!ft_is_space(*str))
 			return (0);
-		i++;
+		str++;
 	}
 	return (1);
 }
