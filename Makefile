@@ -12,7 +12,7 @@
 
 NAME = Cub3D
 
-SRCS := $(subst $(SRC_DIR)/,,$(shell find $(SRC_DIR) -type f -name "*.c" | tr "\n" " "))
+SRCS = $(subst $(SRC_DIR)/,,$(shell find $(SRC_DIR) -type f -name "*.c" | tr "\n" " "))
 
 CC = gcc
 

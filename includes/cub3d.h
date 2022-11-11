@@ -74,6 +74,13 @@ struct				s_map
 	int				flag;
 }					map;
 
+struct		s_data
+{
+	struct s_player		player;
+	t_mlx				mlx;
+	struct s_map		map;
+}
+
 //Parsing
 void	parse(char *file);
 void	parse_map(char *line, int fd);
