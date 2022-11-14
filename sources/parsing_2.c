@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:52:34 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/09 16:10:36 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/14 15:09:02 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,18 @@ int	ft_parse_color(char **temp)
 	return (color);
 }
 
-void	ft_map(void)
+void	ft_map(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	map.map = malloc((map.height + 1) * sizeof(char *));
-	if (!map.map)
+	data->map.map = malloc((data->map.height + 1) * sizeof(char *));
+	if (!data->map.map)
 		ft_error("Malloc failed");
-	while (i < map.height)
+	while (i < data->map.height)
 	{
-		map.map[i] = malloc((map.width + 1) * sizeof(char *));
-		if (!map.map[i])
+		data->map.map[i] = malloc((data->map.width + 1) * sizeof(char *));
+		if (!data->map.map[i])
 			ft_error("Malloc failed");
 		i++;
 	}

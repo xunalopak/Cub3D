@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 23:35:12 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/09 16:10:50 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/14 15:10:01 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void	cleanup(void)
 
 int	main(int ac, char **av)
 {
+	t_data	data;
+
 	if (ac != 2)
 	{
 		ft_error("Wrong number of arguments");
@@ -61,7 +63,7 @@ int	main(int ac, char **av)
 	{
 		ft_error("Wrong file extension");
 	}
-	parse(av[1]);
-	printf("R: %d %d\n", map.width, map.height);
+	parse(av[1], &data);
+	printf("R: %d %d\n", data.map.width, data.map.height);
 	cleanup();
 }

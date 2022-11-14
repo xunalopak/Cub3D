@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 16:01:42 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/09 16:13:53 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/14 15:07:59 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,22 @@ void	check2(char c)
 		ft_error("Invalid map");
 }
 
-void	check3(int i, int j)
+void	check3(int i, int j, t_data *data)
 {
-	if (i - 1 >= 0 && i - 1 < map.height)
-		if (map.map[i - 1][j] != ' ' && map.map[i - 1][j] != '1'
-			&& map.map[i - 1][j] != '\0')
+	if (i - 1 >= 0 && i - 1 < data->map.height)
+		if (data->map.map[i - 1][j] != ' ' && data->map.map[i - 1][j] != '1'
+			&& data->map.map[i - 1][j] != '\0')
 			ft_error("Invalid map1");
-	if (i + 1 >= 0 && i + 1 < map.height)
-		if (map.map[i + 1][j] != ' ' && map.map[i + 1][j] != '1'
-			&& map.map[i + 1][j] != '\0')
+	if (i + 1 >= 0 && i + 1 < data->map.height)
+		if (data->map.map[i + 1][j] != ' ' && data->map.map[i + 1][j] != '1'
+			&& data->map.map[i + 1][j] != '\0')
 			ft_error("Invalid map2");
-	if (j - 1 >= 0 && j - 1 < map.width)
-		if (map.map[i][j - 1] != ' ' && map.map[i][j - 1] != '1'
-			&& map.map[i + 1][j] != '\0')
+	if (j - 1 >= 0 && j - 1 < data->map.width)
+		if (data->map.map[i][j - 1] != ' ' && data->map.map[i][j - 1] != '1'
+			&& data->map.map[i + 1][j] != '\0')
 			ft_error("Invalid map3");
-	if (j + 1 >= 0 && j + 1 < map.width)
-		if (map.map[i][j + 1] != ' ' && map.map[i][j + 1] != '1'
-			&& map.map[i + 1][j] != '\0')
+	if (j + 1 >= 0 && j + 1 < data->map.width)
+		if (data->map.map[i][j + 1] != ' ' && data->map.map[i][j + 1] != '1'
+			&& data->map.map[i + 1][j] != '\0')
 			ft_error("Invalid map4");
 }

@@ -6,13 +6,13 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:52:36 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/09 16:12:55 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/14 15:05:36 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	map_size_process(char *line, int *n)
+void	map_size_process(char *line, int *n, t_data *data)
 {
 	if (map.flag)
 		ft_error("Invalid map");
@@ -21,13 +21,13 @@ void	map_size_process(char *line, int *n)
 	else
 	{
 		if (ft_strlen(line) > map.width)
-			map.width = ft_strlen(line);
-		map.height++;
+			data->map.width = ft_strlen(line);
+		data->map.height++;
 		(*n)++;
 	}
 }
 
-void	map_size(char *file)
+void	map_size(char *file, t_data *data)
 {
 	int		fd;
 	int		n;
@@ -38,69 +38,69 @@ void	map_size(char *file)
 	while (get_next_line(fd, &line) > 0)
 	{
 		if (!ft_is_empty(line))
-			map_size_process(line, &n);
+			map_size_process(line, &n, data);
 		else if (n > 6)
-			map.flag = 1;
+			data->map.flag = 1;
 		free(line);
 	}
-	if (map.gnl)
-		map.height++;
+	if (data->map.gnl)
+		data->map.height++;
 	free(line);
 	close(fd);
 }
 
-void	parse_m2(int i, int j)
+void	parse_m2(int i, int j, t_data *data)
 {
-	check2(map.map[i][j]);
-	if (j == 0 || j == map.width - 1)
-		if (map.map[i][j] != ' ' && map.map[i][j] != '1')
+	check2(data->map.map[i][j]);
+	if (j == 0 || j == data->map.width - 1)
+		if (data->map.map[i][j] != ' ' && data->map.map[i][j] != '1')
 			ft_error("Invalid map");
-	if (map.map[i][j] == 'N' || map.map[i][j] == 'W'
-		|| map.map[i][j] == 'E' || map.map[i][j] == 'S')
+	if (data->map.map[i][j] == 'N' || data->map.map[i][j] == 'W'
+		|| data->map.map[i][j] == 'E' || data->map.map[i][j] == 'S')
 	{
-		player.count++;
-		if (player.count == 1)
+		data->player.count++;
+		if (data->player.count == 1)
 		{
-			player.x = j;
-			player.y = i;
-			player.dir_symbol = map.map[i][j];
+			data->player.x = j;
+			data->player.y = i;
+			data->player.dir_symbol = data->map.map[i][j];
 		}
-		map.map[i][j] = '0';
+		data->map.map[i][j] = '0';
 	}
-	if (map.map[i][j] == ' ')
+	if (data->map.map[i][j] == ' ')
 		check3(i, j);
 }
 
-int	parse_m(void)
+int	parse_m(t_data *data)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (i < map.height)
+	while (i < data->map.height)
 	{
-		if (i == 0 || i == map.height - 1)
-			check1(map.map[i]);
+		if (i == 0 || i == data->map.height - 1)
+			check1(data->map.map[i]);
 		j = 0;
-		while (map.map[i][j])
+		while (data->map.map[i][j])
 		{
-			parse_m2(i, j);
+			parse_m2(i, j, data);
 			j++;
 		}
 		i++;
 	}
-	if (player.count == 0)
+	if (data->player.count == 0)
 		ft_error("No player");
 	return (0);
 }
 
-void	parse_map(char *line, int fd)
+void	parse_map(char *line, int fd, t_data *data)
 {
 	if (close(fd) == -1)
 		ft_error("Close error");
-	if (map.count != 6)
+	if (data->map.count != 6)
 		ft_error("Verify .cub file");
-	if (parse_m())
+	if (parse_m(data))
 		ft_error("Invalid map");
 	free(line);
 }

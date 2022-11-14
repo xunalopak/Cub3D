@@ -6,66 +6,66 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:52:32 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/09 16:12:00 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/14 15:05:46 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	parse_texture2(char **temp)
+int	parse_texture2(char **temp, t_data *data)
 {
 	if (temp[0][0] == 'N' && temp[0][1] == 'O' && temp[0][2] == '\0')
-		map.fd_no = ft_strdup(temp[1]);
+		data->map.fd_no = ft_strdup(temp[1]);
 	else if (temp[0][0] == 'S' && temp[0][1] == 'O' && temp[0][2] == '\0')
-		map.fd_so = ft_strdup(temp[1]);
+		data->map.fd_so = ft_strdup(temp[1]);
 	else if (temp[0][0] == 'W' && temp[0][1] == 'E' && temp[0][2] == '\0')
-		map.fd_we = ft_strdup(temp[1]);
+		data->map.fd_we = ft_strdup(temp[1]);
 	else if (temp[0][0] == 'E' && temp[0][1] == 'A' && temp[0][2] == '\0')
-		map.fd_ea = ft_strdup(temp[1]);
+		data->map.fd_ea = ft_strdup(temp[1]);
 	else if (temp[0][0] == 'F' && temp[0][1] == '\0')
 	{
 		if (map.f >= 1)
 			ft_error("Duplicate F");
-		map.floor = ft_parse_color(temp);
-		map.f++;
+		data->map.floor = ft_parse_color(temp);
+		data->map.f++;
 	}
 	else if (temp[0][0] == 'C' && temp[0][1] == '\0')
 	{
 		if (map.c == 1)
 			ft_error("Duplicate C");
-		map.ceiling = ft_parse_color(temp);
-		map.c++;
+		data->map.ceiling = ft_parse_color(temp);
+		data->map.c++;
 	}
 	else
 		return (1);
 	return (0);
 }
 
-int	parse_texture(char **temp)
+int	parse_texture(char **temp, t_data *data)
 {
-	if (parse_texture2(temp))
+	if (parse_texture2(temp, data))
 		return (1);
 	free_matrix(temp);
-	map.count = 6;
+	data->map.count = 6;
 	return (0);
 }
 
-void	fill_map(char *line, int n)
+void	fill_map(char *line, int n, t_data *data)
 {
 	int	i;
 
 	i = -1;
 	while (line[++i] != '\0')
-		map.map[n][i] = line[i];
+		data->map.map[n][i] = line[i];
 	while (i < map.width)
 	{
-		map.map[n][i] = ' ';
+		data->map.map[n][i] = ' ';
 		i++;
 	}
 	map.map[n][i] = '\0';
 }
 
-void	ft_parse(char *line, int n)
+void	ft_parse(char *line, int n, t_data *data)
 {
 	char	**temp;
 
@@ -77,7 +77,7 @@ void	ft_parse(char *line, int n)
 			free_matrix(temp);
 			ft_error("Invalid line of texture?");
 		}
-		if (parse_texture(temp))
+		if (parse_texture(temp, data))
 		{
 			free_matrix(temp);
 			ft_error("Invalid line of texture!");
@@ -85,12 +85,12 @@ void	ft_parse(char *line, int n)
 		return ;
 	}
 	else if (n > 5)
-		fill_map(line, n - 6);
+		fill_map(line, n - 6, data);
 	else
 		ft_error("Invalid line in .cub!");
 }
 
-void	parse(char *file)
+void	parse(char *file, t_data *data)
 {
 	int		fd;
 	int		n;
@@ -104,14 +104,14 @@ void	parse(char *file)
 		{
 			if (n == 5)
 			{
-				map_size(file);
+				map_size(file, data);
 				ft_map();
 			}
-			ft_parse(line, n);
+			ft_parse(line, n, data);
 			n++;
 		}
 		if (line)
 			free(line);
 	}
-	parse_map(line, fd);
+	parse_map(line, fd, data);
 }

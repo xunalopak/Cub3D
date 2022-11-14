@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 03:58:15 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/14 14:18:54 by jalamell         ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 15:09:14 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,23 +97,23 @@ typedef struct s_data
 }	t_data;
 
 //Parsing
-void	parse(char *file);
-void	parse_map(char *line, int fd);
-int		parse_m(void);
-void	parse_m2(int i, int j);
-void	ft_parse(char *line, int n);
-void	fill_map(char *line, int n);
-int		parse_texture(char **temp);
-int		parse_texture2(char **temp);
+void	parse(char *file, t_data *data);
+void	parse_map(char *line, int fd, t_data *data);
+int		parse_m(t_data *data);
+void	parse_m2(int i, int j, t_data *data);
+void	ft_parse(char *line, int n, t_data *data);
+void	fill_map(char *line, int n, t_data *data);
+int		parse_texture(char **temp, t_data *data);
+int		parse_texture2(char **temp, t_data *data);
 int		ft_parse_color(char **temp);
-void	ft_map(void);
-void	map_size(char *file);
-void	map_size_process(char *line, int *n);
+void	ft_map(t_data *data);
+void	map_size(char *file, t_data *data);
+void	map_size_process(char *line, int *n, t_data *data);
 
 //Checker for parsing
 void	check1(char *line);
 void	check2(char c);
-void	check3(int i, int j);
+void	check3(int i, int j, t_data *data);
 
 //Get next line
 int		get_next_line(int fd, char **line);
