@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:52:36 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/14 15:05:36 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/14 15:15:09 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	parse_m2(int i, int j, t_data *data)
 		data->map.map[i][j] = '0';
 	}
 	if (data->map.map[i][j] == ' ')
-		check3(i, j);
+		check3(i, j, data);
 }
 
 int	parse_m(t_data *data)

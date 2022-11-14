@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:52:32 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/14 15:05:46 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/14 15:15:00 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	parse(char *file, t_data *data)
 			if (n == 5)
 			{
 				map_size(file, data);
-				ft_map();
+				ft_map(data);
 			}
 			ft_parse(line, n, data);
 			n++;
