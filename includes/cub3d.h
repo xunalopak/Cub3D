@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 03:58:15 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/09 16:15:59 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/14 14:18:54 by jalamell         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,34 @@
 # define HEIGHT 64
 # define WIDTH 64
 
-typedef struct s_win
+typedef struct s_vec
 {
-	void	*mlx;
-	void	*win;
-	int		width;
-	int		height;
-}				t_win;
+	double	x;
+	double	y;
+}	t_vec;
 
-struct 				s_player
+typedef struct s_mlx
+{
+	int		win_x;
+	int		win_y;
+	double	fov;
+	void	*mlx_ptr;
+	void	*win_ptr;
+	void	*img_ptr;
+	char	*img;
+	t_vec	*x_ray;
+	double	*y_ray;
+	int		bpp;
+	int		size_line;
+	int		endian;
+}				t_mlx;
+
+struct	s_player
 {
 	double			x;
 	double			y;
+	double			rot;
+	double			heigth;
 	double			dir_x;
 	double			dir_y;
 	double			plane_x;
@@ -48,7 +64,6 @@ struct 				s_player
 	int				count;
 	int				move;
 }					player;
-
 
 struct				s_map
 {
@@ -74,12 +89,12 @@ struct				s_map
 	int				flag;
 }					map;
 
-struct		s_data
+typedef struct s_data
 {
 	struct s_player		player;
 	t_mlx				mlx;
 	struct s_map		map;
-}
+}	t_data;
 
 //Parsing
 void	parse(char *file);
@@ -105,5 +120,9 @@ int		get_next_line(int fd, char **line);
 
 //Free and exit
 void	cleanup(void);
+
+//2d vector
+void	vec_norm(t_vec *vec);
+t_vec	vec_rot(t_vec const *vec, double cosa, double sina);
 
 #endif
