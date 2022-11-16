@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:52:32 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/14 15:15:00 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/17 00:02:27 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ int	parse_texture2(char **temp, t_data *data)
 		data->map.fd_ea = ft_strdup(temp[1]);
 	else if (temp[0][0] == 'F' && temp[0][1] == '\0')
 	{
-		if (map.f >= 1)
+		if (data->map.f >= 1)
 			ft_error("Duplicate F");
 		data->map.floor = ft_parse_color(temp);
 		data->map.f++;
 	}
 	else if (temp[0][0] == 'C' && temp[0][1] == '\0')
 	{
-		if (map.c == 1)
+		if (data->map.c == 1)
 			ft_error("Duplicate C");
 		data->map.ceiling = ft_parse_color(temp);
 		data->map.c++;
@@ -57,12 +57,12 @@ void	fill_map(char *line, int n, t_data *data)
 	i = -1;
 	while (line[++i] != '\0')
 		data->map.map[n][i] = line[i];
-	while (i < map.width)
+	while (i < data->map.width)
 	{
 		data->map.map[n][i] = ' ';
 		i++;
 	}
-	map.map[n][i] = '\0';
+	data->map.map[n][i] = '\0';
 }
 
 void	ft_parse(char *line, int n, t_data *data)
@@ -98,7 +98,7 @@ void	parse(char *file, t_data *data)
 
 	n = 0;
 	fd = ft_open(file);
-	while (get_next_line(fd, &line))
+	while (get_next_line(fd, &line, data))
 	{
 		if (!ft_is_empty(line))
 		{

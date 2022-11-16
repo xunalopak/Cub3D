@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 23:35:12 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/16 22:26:00 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/17 00:10:31 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,11 @@ int	main(int ac, char **av)
 	}
 	parse(av[1], &data);
 	data.win.mlx = mlx_init();
-	data.win.win = mlx_new_window(data.win.mlx, data.win.height,
-			data.win.width, "Cub3D");
-	data.win.img.img = mlx_new_image(data.win.mlx, data.win.height,
-			data.win.width);
-	data.win.img.addr = mlx_get_data_addr(data.win.img.img, &data.win.img.bpp,
-			&data.win.img.length, &data.win.img.endian);
-	load_textures(&data);
+	data.win.win = mlx_new_window(data.win.mlx, data.win.width, data.win.height, "cub3D");
+	data.win.img.img = mlx_new_image(data.win.mlx, data.win.width, data.win.height);
+	data.win.img.addr = mlx_get_data_addr(
+			data.win.img.img, &data.win.img.bpp, &data.win.img.length, &data.win.img.endian);
+	load_texture(&data);
+	mlx_loop(data.win.mlx);
 	cleanup();
 }

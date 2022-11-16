@@ -6,13 +6,13 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 09:16:41 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/09 11:55:11 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/17 00:01:09 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line, t_data *data)
 {
 	int		i;
 	int		n;
@@ -34,6 +34,6 @@ int	get_next_line(int fd, char **line)
 	str[i] = '\0';
 	*line = str;
 	if (ft_strlen(*line) != 0 && n == 0)
-		map.gnl = 1;
+		data->map.gnl = 1;
 	return (n);
 }

@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 03:58:15 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/16 22:25:02 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/17 00:01:34 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ void		parse(char *file, t_data *data);
 void		parse_map(char *line, int fd, t_data *data);
 int			parse_m(t_data *data);
 void		parse_m2(int i, int j, t_data *data);
+void		player_dir(t_data *data);
 void		ft_parse(char *line, int n, t_data *data);
 void		fill_map(char *line, int n, t_data *data);
 int			parse_texture(char **temp, t_data *data);
@@ -137,7 +138,7 @@ u_int32_t	take_pixel(t_img *img, int x, int y);
 void		texture_load(char *path, t_img *dest, t_data *data);
 
 //Get next line
-int			get_next_line(int fd, char **line);
+int			get_next_line(int fd, char **line, t_data *data);
 
 //Free and exit
 void		cleanup(void);

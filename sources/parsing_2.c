@@ -6,11 +6,35 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:52:34 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/14 15:09:02 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/17 00:00:45 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	player_dir(t_data *data)
+{
+	if (data->player.dir_symbol == 'S')
+	{
+		data->player.dir_y = 1;
+		data->player.plane_x = -0.71;
+	}
+	else if (data->player.dir_symbol == 'N')
+	{
+		data->player.dir_y = -1;
+		data->player.plane_x = 0.71;
+	}
+	else if (data->player.dir_symbol == 'E')
+	{
+		data->player.dir_x = 1;
+		data->player.plane_y = 0.71;
+	}
+	else if (data->player.dir_symbol == 'W')
+	{
+		data->player.dir_x = -1;
+		data->player.plane_y = -0.71;
+	}
+}
 
 int	ft_parse_color(char **temp)
 {

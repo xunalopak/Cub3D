@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 16:01:42 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/14 15:07:59 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/17 00:00:45 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,17 @@ void	check3(int i, int j, t_data *data)
 	if (i - 1 >= 0 && i - 1 < data->map.height)
 		if (data->map.map[i - 1][j] != ' ' && data->map.map[i - 1][j] != '1'
 			&& data->map.map[i - 1][j] != '\0')
-			ft_error("Invalid map1");
+			ft_error("Invalid map");
 	if (i + 1 >= 0 && i + 1 < data->map.height)
 		if (data->map.map[i + 1][j] != ' ' && data->map.map[i + 1][j] != '1'
 			&& data->map.map[i + 1][j] != '\0')
-			ft_error("Invalid map2");
+			ft_error("Invalid map");
 	if (j - 1 >= 0 && j - 1 < data->map.width)
 		if (data->map.map[i][j - 1] != ' ' && data->map.map[i][j - 1] != '1'
 			&& data->map.map[i + 1][j] != '\0')
-			ft_error("Invalid map3");
+			ft_error("Invalid map");
 	if (j + 1 >= 0 && j + 1 < data->map.width)
 		if (data->map.map[i][j + 1] != ' ' && data->map.map[i][j + 1] != '1'
 			&& data->map.map[i + 1][j] != '\0')
-			ft_error("Invalid map4");
+			ft_error("Invalid map");
 }

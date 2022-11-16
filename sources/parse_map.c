@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_map.c                                        :+:      :+:    :+:   */
+/*   parse_data->map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:52:36 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/14 15:15:09 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/16 23:58:52 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 void	map_size_process(char *line, int *n, t_data *data)
 {
-	if (map.flag)
+	if (data->map.flag)
 		ft_error("Invalid map");
 	if (*n < 6)
 		(*n)++;
 	else
 	{
-		if (ft_strlen(line) > map.width)
+		if (ft_strlen(line) > data->map.width)
 			data->map.width = ft_strlen(line);
 		data->map.height++;
 		(*n)++;
@@ -35,7 +35,7 @@ void	map_size(char *file, t_data *data)
 
 	n = 0;
 	fd = ft_open(file);
-	while (get_next_line(fd, &line) > 0)
+	while (get_next_line(fd, &line, data) > 0)
 	{
 		if (!ft_is_empty(line))
 			map_size_process(line, &n, data);
@@ -54,17 +54,20 @@ void	parse_m2(int i, int j, t_data *data)
 	check2(data->map.map[i][j]);
 	if (j == 0 || j == data->map.width - 1)
 		if (data->map.map[i][j] != ' ' && data->map.map[i][j] != '1')
-			ft_error("Invalid map");
+			ft_error("Invalid map problem");
 	if (data->map.map[i][j] == 'N' || data->map.map[i][j] == 'W'
 		|| data->map.map[i][j] == 'E' || data->map.map[i][j] == 'S')
 	{
 		data->player.count++;
 		if (data->player.count == 1)
 		{
-			data->player.x = j;
-			data->player.y = i;
+			data->player.x = j + 0.5;
+			data->player.y = i + 0.5;
 			data->player.dir_symbol = data->map.map[i][j];
+			player_dir(data);
 		}
+		else
+			ft_error("Too many players");
 		data->map.map[i][j] = '0';
 	}
 	if (data->map.map[i][j] == ' ')
@@ -76,18 +79,14 @@ int	parse_m(t_data *data)
 	int	i;
 	int	j;
 
-	i = 0;
-	while (i < data->map.height)
+	i = -1;
+	while (++i < data->map.height)
 	{
 		if (i == 0 || i == data->map.height - 1)
 			check1(data->map.map[i]);
-		j = 0;
-		while (data->map.map[i][j])
-		{
+		j = -1;
+		while (data->map.map[i][++j])
 			parse_m2(i, j, data);
-			j++;
-		}
-		i++;
 	}
 	if (data->player.count == 0)
 		ft_error("No player");
