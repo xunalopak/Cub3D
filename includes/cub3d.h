@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 03:58:15 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/15 13:54:31 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/16 22:25:02 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@
 # define HEIGHT 64
 # define WIDTH 64
 
-typedef struct 		s_vec
+typedef struct s_vec
 {
 	double			x;
 	double			y;
 }					t_vec;
 
-typedef struct 		s_img
+typedef struct s_img
 {
 	void			*img;
 	char			*addr;
@@ -44,23 +44,27 @@ typedef struct 		s_img
 
 typedef struct s_win
 {
-	void	*mlx;
-	void	*win;
-	int		win_x;
-	int		win_y;
-	double	fov;
-	int 	height;
-	int 	width;
-	t_vec	*x_ray;
-	double	*y_ray;
-	t_img	img;
-	t_img	west;
-	t_img	east;
-	t_img	north;
-	t_img	south;
-}				t_win;
+	void			*mlx;
+	void			*win;
+	int				win_x;
+	int				win_y;
+	double			fov;
+	int				height;
+	int				width;
+	t_vec			*x_ray;
+	double			*y_ray;
+	t_img			img;
+	t_img			west;
+	t_img			east;
+	t_img			north;
+	t_img			south;
+	u_int32_t		north_array[64][64];
+	u_int32_t		south_array[64][64];
+	u_int32_t		west_array[64][64];
+	u_int32_t		east_array[64][64];
+}					t_win;
 
-struct	s_player
+struct s_player
 {
 	double			x;
 	double			y;
@@ -76,7 +80,7 @@ struct	s_player
 	int				move;
 }					player;
 
-struct				s_map
+struct s_map
 {
 	char			**map;
 	char			*fd_no;
@@ -108,32 +112,38 @@ typedef struct s_data
 }	t_data;
 
 //Parsing
-void	parse(char *file, t_data *data);
-void	parse_map(char *line, int fd, t_data *data);
-int		parse_m(t_data *data);
-void	parse_m2(int i, int j, t_data *data);
-void	ft_parse(char *line, int n, t_data *data);
-void	fill_map(char *line, int n, t_data *data);
-int		parse_texture(char **temp, t_data *data);
-int		parse_texture2(char **temp, t_data *data);
-int		ft_parse_color(char **temp);
-void	ft_map(t_data *data);
-void	map_size(char *file, t_data *data);
-void	map_size_process(char *line, int *n, t_data *data);
+void		parse(char *file, t_data *data);
+void		parse_map(char *line, int fd, t_data *data);
+int			parse_m(t_data *data);
+void		parse_m2(int i, int j, t_data *data);
+void		ft_parse(char *line, int n, t_data *data);
+void		fill_map(char *line, int n, t_data *data);
+int			parse_texture(char **temp, t_data *data);
+int			parse_texture2(char **temp, t_data *data);
+int			ft_parse_color(char **temp);
+void		ft_map(t_data *data);
+void		map_size(char *file, t_data *data);
+void		map_size_process(char *line, int *n, t_data *data);
 
 //Checker for parsing
-void	check1(char *line);
-void	check2(char c);
-void	check3(int i, int j, t_data *data);
+void		check1(char *line);
+void		check2(char c);
+void		check3(int i, int j, t_data *data);
+
+//Texture
+void		load_texture(t_data *data);
+void		texture_load_array(t_img *src, u_int32_t dest[64][64]);
+u_int32_t	take_pixel(t_img *img, int x, int y);
+void		texture_load(char *path, t_img *dest, t_data *data);
 
 //Get next line
-int		get_next_line(int fd, char **line);
+int			get_next_line(int fd, char **line);
 
 //Free and exit
-void	cleanup(void);
+void		cleanup(void);
 
 //2d vector
-void	vec_norm(t_vec *vec);
-t_vec	vec_rot(t_vec const *vec, double cosa, double sina);
+void		vec_norm(t_vec *vec);
+t_vec		vec_rot(t_vec const *vec, double cosa, double sina);
 
 #endif

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   data_mlx_init.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalamell <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:06:22 by jalamell          #+#    #+#             */
-/*   Updated: 2022/11/14 14:16:48 by jalamell         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 22:14:27 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	fill_ray(t_mlx *mlx)
+static void	fill_ray(t_win *mlx)
 {
 	int			i;
 	float const	t = tan(mlx->fov / 2.);
@@ -31,17 +31,17 @@ static void	fill_ray(t_mlx *mlx)
 		mlx->y_ray[i] = (2. * (float)i - (float)mlx->win_y) * inv_x * t;
 }
 
-void	data_mlx_init(t_mlx	*mlx)
+void	data_mlx_init(t_win	*mlx)
 {
 	mlx->win_x = 2560;
 	mlx->win_y = 1395;
 	mlx->fov = 60.;
-	mlx->mlx_ptr = mlx_init();
-	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, mlx->win_x,
+	mlx->mlx = mlx_init();
+	mlx->win = mlx_new_window(mlx->mlx, mlx->win_x,
 			mlx->win_y, "Cub3D");
-	mlx->img_ptr = mlx_new_image(mlx->mlx_ptr, mlx->win_x, mlx->win_y);
-	mlx->img = mlx_get_data_addr(mlx->img_ptr, &mlx->bpp,
-			&mlx->size_line, &mlx->endian);
+	mlx->img.img = mlx_new_image(mlx->mlx, mlx->win_x, mlx->win_y);
+	mlx->img.addr = mlx_get_data_addr(mlx->img.addr, &mlx->img.bpp,
+			&mlx->img.length, &mlx->img.endian);
 	mlx->x_ray = malloc(mlx->win_x * sizeof(t_vec));
 	mlx->y_ray = malloc(mlx->win_y * sizeof(double));
 	fill_ray(mlx);
