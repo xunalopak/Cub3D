@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 23:35:12 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/14 15:10:01 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/15 18:46:29 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,35 @@ void	cleanup(void)
 		destroy_map();
 }
 
+void	texture_load(char *path, t_img *dest, t_data *data)
+{
+	int width;
+	int height;
+	int	fd;
+
+	fd = open(path, O_RDONLY);
+	if (fd == -1)
+		ft_error("Error\nCouldn't open texture file");
+	close(fd);
+	dest->img = mlx_open_xpm_file(data->win.mlx, path, &width, &height);
+	dest->addr = mlx_get_data_addr(dest->img, &dest->bpp, &dest->length, &dest->endian);
+}
+
+void	load_texture(t_data *data)
+{
+	texture_load(data->map.fd_no, &data->win.north, data);
+	texture_load(data->map.fd_so, &data->win.south, data);
+	texture_load(data->map.fd_we, &data->win.west, data);
+	texture_load(data->map.fd_ea, &data->win.east, data);
+}
+
 int	main(int ac, char **av)
 {
 	t_data	data;
 
+	data.win.width = WIDTH;
+	data.win.height = HEIGHT;
+	ft_bzero(&data, sizeof(t_data));
 	if (ac != 2)
 	{
 		ft_error("Wrong number of arguments");
@@ -64,6 +89,11 @@ int	main(int ac, char **av)
 		ft_error("Wrong file extension");
 	}
 	parse(av[1], &data);
-	printf("R: %d %d\n", data.map.width, data.map.height);
+	data.win.mlx = mlx_init();
+	data.win.win = mlx_new_window(data.win.mlx, data.win.height, data.win.width, "Cub3D");
+	data.win.img.img = mlx_new_image(data.win.mlx, data.win.height, data.win.width);
+	data.win.img.addr = mlx_get_data_addr(data.win.img.img, &data.win.img.bpp,
+			&data.win.img.length, &data.win.img.endian);
+	load_textures(&data);
 	cleanup();
 }

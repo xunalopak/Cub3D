@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 03:58:15 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/14 15:09:14 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/15 13:54:31 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,27 +27,38 @@
 # define HEIGHT 64
 # define WIDTH 64
 
-typedef struct s_vec
+typedef struct 		s_vec
 {
-	double	x;
-	double	y;
-}	t_vec;
+	double			x;
+	double			y;
+}					t_vec;
 
-typedef struct s_mlx
+typedef struct 		s_img
 {
+	void			*img;
+	char			*addr;
+	int				bpp;
+	int				length;
+	int				endian;
+}					t_img;
+
+typedef struct s_win
+{
+	void	*mlx;
+	void	*win;
 	int		win_x;
 	int		win_y;
 	double	fov;
-	void	*mlx_ptr;
-	void	*win_ptr;
-	void	*img_ptr;
-	char	*img;
+	int 	height;
+	int 	width;
 	t_vec	*x_ray;
 	double	*y_ray;
-	int		bpp;
-	int		size_line;
-	int		endian;
-}				t_mlx;
+	t_img	img;
+	t_img	west;
+	t_img	east;
+	t_img	north;
+	t_img	south;
+}				t_win;
 
 struct	s_player
 {
@@ -92,7 +103,7 @@ struct				s_map
 typedef struct s_data
 {
 	struct s_player		player;
-	t_mlx				mlx;
+	t_win				win;
 	struct s_map		map;
 }	t_data;
 
