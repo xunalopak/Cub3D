@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 22:23:14 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/17 00:00:45 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/17 00:37:11 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ void	texture_load(char *path, t_img *dest, t_data *data)
 
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
-		ft_error("Error\nCouldn't open texture file");
+		ft_error("Invalid texture path");
 	close(fd);
 	dest->img = mlx_xpm_file_to_image(data->win.mlx, path, &width, &height);
-	dest->addr = mlx_get_data_addr(dest->img, &dest->bpp,
-			&dest->length, &dest->endian);
+	dest->addr = mlx_get_data_addr(dest->img, &dest->bpp, &dest->length,
+			&dest->endian);
 }
 
 u_int32_t	take_pixel(t_img *img, int x, int y)
