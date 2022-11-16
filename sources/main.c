@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 23:35:12 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/17 00:10:31 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/17 00:44:19 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ int	main(int ac, char **av)
 {
 	t_data	data;
 
+	ft_bzero(&data, sizeof(t_data));
 	data.win.width = WIDTH;
 	data.win.height = HEIGHT;
-	ft_bzero(&data, sizeof(t_data));
 	if (ac != 2)
 	{
 		ft_error("Wrong number of arguments");

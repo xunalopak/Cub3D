@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 03:58:15 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/17 00:01:34 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/17 00:43:40 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # include "../mlx_linux/mlx.h"
 # include "../libft/libft.h"
 
-# define HEIGHT 64
-# define WIDTH 64
+# define HEIGHT 512
+# define WIDTH 1024
 
 typedef struct s_vec
 {

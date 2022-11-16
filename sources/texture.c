@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 22:23:14 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/17 00:37:11 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/17 00:44:59 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	texture_load_array(t_img *src, u_int32_t dest[64][64])
 		x = 0;
 		while (x < 64)
 		{
-			dest[64][64] = take_pixel(src, x, y);
+			dest[x][y] = take_pixel(src, x, y);
 			x++;
 		}
 		y++;
