@@ -12,32 +12,89 @@
 
 #include "cub3d.h"
 
-static void	draw_column(t_data *data, int x, double dst, int dir)
+static void	draw_column(t_data *data, int x, t_inter hit)
 {
-	int			i;
-	int			color;
-	double		heigth;
-	int *const	img = (int *)data->mlx.img;
+	int				i;
+	int				color;
+	double			height;
+	int *const		img = (int *)data->mlx.img;
 
-	(void) dir;
 	color = 0;
 	i = -1;
+//dprintf(2, "%f\n", hit.dst);
 	while (++i < data->mlx.win_y)
 	{
-		heigth = data->player.heigth + dst * data->mlx.y_ray[i];
-		if (heigth < 0.)
-			color = 0X0000FF;
-		else if (heigth > 1.)
-			color = 0XFF0000;
+		height = data->player.height + hit.dst * data->mlx.y_ray[i];
+//dprintf(2, "%f %f %f %f\n", data->player.height, hit.dst, data->mlx.y_ray[i], height);
+		if (height < 0.)
+			color = data->map.floor;
+		else if (height > 1.)
+			color = data->map.ceiling;
 		else
-			color = 0X00FF00;
-	}
+			color = 0X0000FF;
 	img[i * data->mlx.win_x + x] = color;
+	}
 }
 
-static double	calc_dst(t_map *map, t_vec dir)
+static t_inter	calc_dst(t_data	*data, t_vec dir)
 {
-	return (5.);
+	t_inter	ret;
+	int		X;
+	int		Y;
+	int		dX;
+	int		dY;
+	double	dx;
+	double	dy;
+
+	X = (int)floor(data->player.x);
+	Y = (int)floor(data->player.y);
+	dX = 1;
+	dY = 1;
+	ret.dst = 0.;
+	ret.face = 0;
+	ret.pos1 = 0.;
+	ret.pos2.x = data->player.x - (double)X;
+	ret.pos2.y = data->player.y - (double)Y;
+	ret.type = data->map.map[Y][X];
+
+	if (dir.x < 0.)
+	{
+		dX = -1;
+		ret.pos2.x = 1. - ret.pos2.x;
+		dir.x = -dir.x;
+	}
+	if (dir.y < 0.)
+	{
+		dY = -1;
+		ret.pos2.y = 1. - ret.pos2.y;
+		dir.y = -dir.y;
+	}
+//dprintf(2, "xy %f %f\n", data->player.x, data->player.y);
+//dprintf(2, "XY %d %d #%c#\n", X, Y, ret.type);
+//dprintf(2, "dxy %f %f\n", dir.x, dir.y);
+	while (ret.type == '0')
+	{
+		dx = (1. - ret.pos2.x) / dir.x;
+		dy = (1. - ret.pos2.y) / dir.y;
+		if (dx < dy)
+		{
+			ret.pos2.x = 0.;
+			ret.pos2.y += dx * dir.y;
+			ret.dst += dx;
+			X += dX;
+			ret.face = 1 - dX;
+		}
+		else
+		{
+			ret.pos2.x += dy * dir.x;
+			ret.pos2.y = 0.;
+			ret.dst += dy;
+			Y += dY;
+			ret.face = 2 - dY;
+		}
+		ret.type = data->map.map[Y][X];
+	}
+	return (ret);
 }
 
 void	render(t_data *data)
@@ -45,30 +102,19 @@ void	render(t_data *data)
 	int				i;
 	double const	cosa = cos(data->player.rot);
 	double const	sina = sin(data->player.rot);
-	double			dst;
-	int				dir;
+	t_inter			hit;
+	t_vec			ray;
 
-	dst = calc_dst(&(data->map),
-			vec_rot(&(data->mlx.x_ray[i]), cosa, sina), &dir);
+i = -1;
+while (data->map.map[++i])
+dprintf(2, "%s\n", data->map.map[i]);
+	ray.x = data->mlx.z;
 	i = -1;
 	while (++i < data->mlx.win_x)
-		draw_column(data, i, dst, dir);
+	{
+		ray.y = data->mlx.x_ray[i];
+		hit = calc_dst(data, vec_rot(&ray, cosa, sina));
+		draw_column(data, i, hit);
+	}
+	mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.win_ptr, data->mlx.img_ptr, 0, 0);
 }
-
-/*
-
-float	fov = 100;
-int		win_x = 1000;
-float	rot = 0;
-float	height = ?
-
-f(x)
-	fx = 2x/win_x - 1
-	v = norm(fx, 1/tan(fov/2))
-	v2 = (sinrot vx + cosrot vy, -cosrot vx + sinrot vy)
-
-f(y,d)
-	fy = (2y - win_y)/win_x * tan(fov/2)
-	fy * d + height
-
-*/

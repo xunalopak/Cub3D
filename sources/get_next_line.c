@@ -33,7 +33,7 @@ int	get_next_line(int fd, char **line)
 	}
 	str[i] = '\0';
 	*line = str;
-	if (ft_strlen(*line) != 0 && n == 0)
-		map.gnl = 1;
+//	if (ft_strlen(*line) != 0 && n == 0)
+//		map.gnl = 1;
 	return (n);
 }

@@ -33,6 +33,15 @@ typedef struct s_vec
 	double	y;
 }	t_vec;
 
+typedef struct s_inter
+{
+	double	dst;
+	int		face;
+	double	pos1;
+	t_vec	pos2;
+	char	type;
+}			t_inter;
+
 typedef struct s_mlx
 {
 	int		win_x;
@@ -42,19 +51,20 @@ typedef struct s_mlx
 	void	*win_ptr;
 	void	*img_ptr;
 	char	*img;
-	t_vec	*x_ray;
+	double	*x_ray;
 	double	*y_ray;
+	double	z;
 	int		bpp;
 	int		size_line;
 	int		endian;
-}				t_mlx;
+}			t_mlx;
 
-struct	s_player
+typedef struct s_player
 {
 	double			x;
 	double			y;
 	double			rot;
-	double			heigth;
+	double			height;
 	double			dir_x;
 	double			dir_y;
 	double			plane_x;
@@ -63,9 +73,9 @@ struct	s_player
 	char			dir_symbol;
 	int				count;
 	int				move;
-}					player;
+}					t_player;
 
-struct				s_map
+typedef struct s_map
 {
 	char			**map;
 	char			*fd_no;
@@ -87,13 +97,13 @@ struct				s_map
 	int				c;
 	int				n;
 	int				flag;
-}					map;
+}					t_map;
 
 typedef struct s_data
 {
-	struct s_player		player;
-	t_mlx				mlx;
-	struct s_map		map;
+	t_player	player;
+	t_mlx		mlx;
+	t_map		map;
 }	t_data;
 
 //Parsing
@@ -105,24 +115,28 @@ void	ft_parse(char *line, int n, t_data *data);
 void	fill_map(char *line, int n, t_data *data);
 int		parse_texture(char **temp, t_data *data);
 int		parse_texture2(char **temp, t_data *data);
-int		ft_parse_color(char **temp);
+int		ft_parse_color(char **temp, t_data *data);
 void	ft_map(t_data *data);
 void	map_size(char *file, t_data *data);
 void	map_size_process(char *line, int *n, t_data *data);
 
 //Checker for parsing
-void	check1(char *line);
-void	check2(char c);
+int		check1(char *line);
+int		check2(char c);
 void	check3(int i, int j, t_data *data);
 
 //Get next line
 int		get_next_line(int fd, char **line);
 
 //Free and exit
-void	cleanup(void);
+void	cub3D_error(char *str, t_data *data);
 
 //2d vector
 void	vec_norm(t_vec *vec);
 t_vec	vec_rot(t_vec const *vec, double cosa, double sina);
+
+//mlx
+void	data_mlx_init(t_mlx	*mlx);
+void	render(t_data *data);
 
 #endif
