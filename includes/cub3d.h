@@ -26,6 +26,8 @@
 
 # define WIN_HEIGHT 800
 # define WIN_WIDTH 800
+# define PC_HEIGHT .5
+# define PC_FOV 100.
 
 typedef struct s_vec
 {
