@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalamell <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 11:47:07 by jalamell          #+#    #+#             */
-/*   Updated: 2022/11/14 14:13:55 by jalamell         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 00:15:14 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	draw_column(t_data *data, int x, t_inter hit)
 	int				i;
 	int				color;
 	double			height;
-	int *const		img = (int *)data->mlx.img;
+	int *const		img = (int *)data->mlx.img.addr;
 
 	color = 0;
 	i = -1;
@@ -116,5 +116,5 @@ dprintf(2, "%s\n", data->map.map[i]);
 		hit = calc_dst(data, vec_rot(&ray, cosa, sina));
 		draw_column(data, i, hit);
 	}
-	mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.win_ptr, data->mlx.img_ptr, 0, 0);
+	mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.win_ptr, data->mlx.img.img, 0, 0);
 }

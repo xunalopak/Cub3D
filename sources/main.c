@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 23:35:12 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/14 15:10:01 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/17 00:44:19 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,9 @@ int	main(int ac, char **av)
 {
 	t_data	data;
 
+	ft_bzero(&data, sizeof(t_data));
+	//data.win.width = WIDTH;
+	//data.win.height = HEIGHT;
 	if (ac != 2)
 	{
 		ft_error("Wrong number of arguments");
@@ -98,8 +101,8 @@ int	main(int ac, char **av)
 	data.player.count = 0;
 	parse(av[1], &data);
 	data_mlx_init(&(data.mlx));
+	load_texture(&data);
 	render(&data);
 	mlx_loop(data.mlx.mlx_ptr);
-	printf("R: %d %d\n", data.map.width, data.map.height);
 	cleanup(&data);
 }

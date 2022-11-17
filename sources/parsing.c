@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:52:32 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/14 15:15:00 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/17 00:02:27 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	parse(char *file, t_data *data)
 
 	n = 0;
 	fd = ft_open(file);
-	while (get_next_line(fd, &line))
+	while (get_next_line(fd, &line, data))
 	{
 		if (!ft_is_empty(line))
 		{

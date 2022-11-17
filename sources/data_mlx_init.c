@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data_mlx_init.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalamell <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:06:22 by jalamell          #+#    #+#             */
-/*   Updated: 2022/11/14 14:16:48 by jalamell         ###   ########lyon.fr   */
+/*   Updated: 2022/11/16 22:14:27 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,20 @@ static void	fill_ray(t_mlx *mlx)
 
 void	data_mlx_init(t_mlx	*mlx)
 {
-	mlx->win_x = 500;
-	mlx->win_y = 500;
+	mlx->win_x = WIN_WIDTH;
+	mlx->win_y = WIN_HEIGHT;
 	mlx->fov = 3.1415926535 * (100. / 180.);
 	mlx->mlx_ptr = mlx_init();
 	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, mlx->win_x,
 			mlx->win_y, "Cub3D");
-	mlx->img_ptr = mlx_new_image(mlx->mlx_ptr, mlx->win_x, mlx->win_y);
-	mlx->img = mlx_get_data_addr(mlx->img_ptr, &mlx->bpp,
-			&mlx->size_line, &mlx->endian);
+	mlx->img.img = mlx_new_image(mlx->mlx_ptr, mlx->win_x, mlx->win_y);
+dprintf(2, "ok\n");
+	mlx->img.addr = mlx_get_data_addr(mlx->img.img, &(mlx->img.bpp),
+			&(mlx->img.length), &(mlx->img.endian));
+dprintf(2, "ok\n");
 	mlx->x_ray = malloc(mlx->win_x * sizeof(double));
 	mlx->y_ray = malloc(mlx->win_y * sizeof(double));
+dprintf(2, "ok\n");
 	fill_ray(mlx);
+dprintf(2, "ok\n");
 }

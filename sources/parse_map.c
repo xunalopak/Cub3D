@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_map.c                                        :+:      :+:    :+:   */
+/*   parse_data->map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:52:36 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/14 15:15:09 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/16 23:58:52 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	map_size(char *file, t_data *data)
 	n = 0;
 	data->map.flag = 0;
 	fd = ft_open(file);
-	while (get_next_line(fd, &line) > 0)
+	while (get_next_line(fd, &line, data) > 0)
 	{
 		if (!ft_is_empty(line))
 			map_size_process(line, &n, data);
@@ -68,7 +68,10 @@ void	parse_m2(int i, int j, t_data *data)
 			data->player.rot = 0.;
 			data->player.height = .5;
 			data->player.dir_symbol = data->map.map[i][j];
+			player_dir(data);
 		}
+		else
+			ft_error("Too many players");
 		data->map.map[i][j] = '0';
 	}
 	if (data->map.map[i][j] == ' ')
@@ -80,19 +83,15 @@ int	parse_m(t_data *data)
 	int	i;
 	int	j;
 
-	i = 0;
-	while (i < data->map.height)
+	i = -1;
+	while (++i < data->map.height)
 	{
 		if (i == 0 || i == data->map.height - 1)
 			if (check1(data->map.map[i]))
 				cub3D_error("Invalid mapD", data);
-		j = 0;
-		while (data->map.map[i][j])
-		{
+		j = -1;
+		while (data->map.map[i][++j])
 			parse_m2(i, j, data);
-			j++;
-		}
-		i++;
 	}
 	if (data->player.count == 0)
 		cub3D_error("No player", data);
