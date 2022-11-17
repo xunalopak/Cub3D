@@ -15,29 +15,13 @@
 void	player_dir(t_data *data)
 {
 	if (data->player.dir_symbol == 'S')
-	{
 		data->player.rot = 1.570796326794;
-		data->player.dir_y = 1;
-		data->player.plane_x = -0.71;
-	}
 	else if (data->player.dir_symbol == 'N')
-	{
 		data->player.rot = -1.570796326794;
-		data->player.dir_y = -1;
-		data->player.plane_x = 0.71;
-	}
 	else if (data->player.dir_symbol == 'E')
-	{
 		data->player.rot = 0.;
-		data->player.dir_x = 1;
-		data->player.plane_y = 0.71;
-	}
 	else if (data->player.dir_symbol == 'W')
-	{
 		data->player.rot = 3.14159265358979;
-		data->player.dir_x = -1;
-		data->player.plane_y = -0.71;
-	}
 }
 
 int	ft_parse_color(char **temp, t_data *data)

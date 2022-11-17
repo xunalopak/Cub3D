@@ -80,10 +80,6 @@ typedef struct s_player
 	double			y;
 	double			rot;
 	double			height;
-	double			dir_x;
-	double			dir_y;
-	double			plane_x;
-	double			plane_y;
 	double			dir;
 	char			dir_symbol;
 	int				count;
@@ -122,24 +118,24 @@ typedef struct s_data
 }	t_data;
 
 //Parsing
-void	parse(char *file, t_data *data);
-void	parse_map(char *line, int fd, t_data *data);
-int		parse_m(t_data *data);
-void	parse_m2(int i, int j, t_data *data);
-void	player_dir(t_data *data); //?
-void	ft_parse(char *line, int n, t_data *data);
-void	fill_map(char *line, int n, t_data *data);
-int		parse_texture(char **temp, t_data *data);
-int		parse_texture2(char **temp, t_data *data);
-int		ft_parse_color(char **temp, t_data *data);
-void	ft_map(t_data *data);
-void	map_size(char *file, t_data *data);
-void	map_size_process(char *line, int *n, t_data *data);
+void		parse(char *file, t_data *data);
+void		parse_map(char *line, int fd, t_data *data);
+int			parse_m(t_data *data);
+void		parse_m2(int i, int j, t_data *data);
+void		player_dir(t_data *data);
+void		ft_parse(char *line, int n, t_data *data);
+void		fill_map(char *line, int n, t_data *data);
+int			parse_texture(char **temp, t_data *data);
+int			parse_texture2(char **temp, t_data *data);
+int			ft_parse_color(char **temp, t_data *data);
+void		ft_map(t_data *data);
+void		map_size(char *file, t_data *data);
+void		map_size_process(char *line, int *n, t_data *data);
 
 //Checker for parsing
-int		check1(char *line);
-int		check2(char c);
-void	check3(int i, int j, t_data *data);
+int			check1(char *line);
+int			check2(char c);
+void		check3(int i, int j, t_data *data);
 
 //Texture
 void		load_texture(t_data *data);
@@ -151,15 +147,14 @@ void		texture_load(char *path, t_img *dest, t_data *data);
 int			get_next_line(int fd, char **line, t_data *data);
 
 //Free and exit
-void	cub3D_error(char *str, t_data *data);
-//void		cleanup(void);
+void		cub3D_error(char *str, t_data *data);
 
 //2d vector
 void		vec_norm(t_vec *vec);
 t_vec		vec_rot(t_vec const *vec, double cosa, double sina);
 
 //mlx
-void	data_mlx_init(t_mlx	*mlx);
-void	render(t_data *data);
+void		data_mlx_init(t_mlx	*mlx);
+void		render(t_data *data);
 
 #endif

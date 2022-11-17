@@ -12,6 +12,21 @@
 
 #include "cub3d.h"
 
+static int	get_color_from_texture(t_data *data, int face, double x, double y)
+{
+	int const	X = (int)floor(x * 64.);
+	int const	Y = (int)floor((1 - y) * 64.);
+
+	if (face == 0)
+		return (data->mlx.south_array[X][Y]);
+	else if (face == 1)
+		return (data->mlx.west_array[X][Y]);
+	else if (face == 2)
+		return (data->mlx.north_array[X][Y]);
+	else
+		return (data->mlx.east_array[X][Y]);
+}
+
 static void	draw_column(t_data *data, int x, t_inter hit)
 {
 	int				i;
@@ -31,7 +46,7 @@ static void	draw_column(t_data *data, int x, t_inter hit)
 		else if (height > 1.)
 			color = data->map.ceiling;
 		else
-			color = 0X0000FF;
+			color = get_color_from_texture(data, hit.face, hit.pos1, height);
 	img[i * data->mlx.win_x + x] = color;
 	}
 }
@@ -80,6 +95,9 @@ static t_inter	calc_dst(t_data	*data, t_vec dir)
 		{
 			ret.pos2.x = 0.;
 			ret.pos2.y += dx * dir.y;
+			ret.pos1 = ret.pos2.y;
+			if (dY < 0)
+				ret.pos1 = 1 - ret.pos1;
 			ret.dst += dx;
 			X += dX;
 			ret.face = 1 - dX;
@@ -88,6 +106,9 @@ static t_inter	calc_dst(t_data	*data, t_vec dir)
 		{
 			ret.pos2.x += dy * dir.x;
 			ret.pos2.y = 0.;
+			ret.pos1 = ret.pos2.x;
+			if (dX < 0)
+				ret.pos1 = 1 - ret.pos1;
 			ret.dst += dy;
 			Y += dY;
 			ret.face = 2 - dY;
