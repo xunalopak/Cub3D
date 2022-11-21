@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:52:32 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/17 00:02:27 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/21 19:20:52 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ int	parse_texture2(char **temp, t_data *data)
 	else if (temp[0][0] == 'F' && temp[0][1] == '\0')
 	{
 		if (data->map.f >= 1)
-			cub3D_error("Duplicate F", data);
+			cub3d_error("Duplicate F", data);
 		data->map.floor = ft_parse_color(temp, data);
 		data->map.f++;
 	}
 	else if (temp[0][0] == 'C' && temp[0][1] == '\0')
 	{
 		if (data->map.c == 1)
-			cub3D_error("Duplicate C", data);
+			cub3d_error("Duplicate C", data);
 		data->map.ceiling = ft_parse_color(temp, data);
 		data->map.c++;
 	}
@@ -75,19 +75,19 @@ void	ft_parse(char *line, int n, t_data *data)
 		if (temp[2] != NULL)
 		{
 			free_matrix(temp);
-			cub3D_error("Invalid line of texture?", data);
+			cub3d_error("Invalid line of texture?", data);
 		}
 		if (parse_texture(temp, data))
 		{
 			free_matrix(temp);
-			cub3D_error("Invalid line of texture!", data);
+			cub3d_error("Invalid line of texture!", data);
 		}
 		return ;
 	}
 	else if (n > 5)
 		fill_map(line, n - 6, data);
 	else
-		cub3D_error("Invalid line in .cub!", data);
+		cub3d_error("Invalid line in .cub!", data);
 }
 
 void	parse(char *file, t_data *data)

@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 03:58:15 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/17 00:43:40 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/21 19:34:36 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,42 @@
 # define WIN_WIDTH 800
 # define PC_HEIGHT .5
 # define PC_FOV 100.
+
+# if __APPLE__
+#  define KEY_W 13
+#  define KEY_A 0
+#  define KEY_S 1
+#  define KEY_D 2
+#  define KEY_LEFT 123
+#  define KEY_RIGHT 124
+#  define KEY_UP 126
+#  define KEY_DOWN 125
+#  define KEY_ESC 53
+# elif __linux__
+#  define KEY_W 119
+#  define KEY_A 97
+#  define KEY_S 115
+#  define KEY_D 100
+#  define KEY_LEFT 65361
+#  define KEY_RIGHT 65363
+#  define KEY_UP 65362
+#  define KEY_DOWN 65364
+#  define KEY_ESC 65307
+# endif
+
+# define KEY_PRESS 2
+# define KEY_RELEASE 3
+# define DESTROY_NOTIFY 17
+
+//PLAYER MOVE CODE
+# define MOVE_UP 1
+# define MOVE_DOWN 2
+# define MOVE_LEFT 3
+# define MOVE_RIGHT 4
+
+//PLAYER ROTATE CODE
+# define ROTATE_LEFT 5
+# define ROTATE_RIGHT 6
 
 typedef struct s_vec
 {
@@ -80,10 +116,10 @@ typedef struct s_player
 	double			y;
 	double			rot;
 	double			height;
-	double			dir;
 	char			dir_symbol;
 	int				count;
 	int				move;
+	int				turn;
 }					t_player;
 
 typedef struct s_map
@@ -147,7 +183,7 @@ void		texture_load(char *path, t_img *dest, t_data *data);
 int			get_next_line(int fd, char **line, t_data *data);
 
 //Free and exit
-void		cub3D_error(char *str, t_data *data);
+void		cub3d_error(char *str, t_data *data);
 
 //2d vector
 void		vec_norm(t_vec *vec);
@@ -156,5 +192,13 @@ t_vec		vec_rot(t_vec const *vec, double cosa, double sina);
 //mlx
 void		data_mlx_init(t_mlx	*mlx);
 void		render(t_data *data);
+
+//Event hook
+int			key_press(int key, t_data *data);
+int			key_release(int key, t_data *data);
+int			destroy_hook(t_data *data);
+
+void		cleanup(t_data *data);
+void		ft_exit(int exit_code, t_data *data);
 
 #endif

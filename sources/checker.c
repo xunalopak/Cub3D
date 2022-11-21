@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 16:01:42 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/17 00:00:45 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/21 19:20:52 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,17 @@ void	check3(int i, int j, t_data *data)
 	if (i - 1 >= 0 && i - 1 < data->map.height)
 		if (data->map.map[i - 1][j] != ' ' && data->map.map[i - 1][j] != '1'
 			&& data->map.map[i - 1][j] != '\0')
-			cub3D_error("Invalid map1", data);
+			cub3d_error("Invalid map1", data);
 	if (i + 1 >= 0 && i + 1 < data->map.height)
 		if (data->map.map[i + 1][j] != ' ' && data->map.map[i + 1][j] != '1'
 			&& data->map.map[i + 1][j] != '\0')
-			cub3D_error("Invalid map2", data);
+			cub3d_error("Invalid map2", data);
 	if (j - 1 >= 0 && j - 1 < data->map.width)
 		if (data->map.map[i][j - 1] != ' ' && data->map.map[i][j - 1] != '1'
 			&& data->map.map[i + 1][j] != '\0')
-			cub3D_error("Invalid map3", data);
+			cub3d_error("Invalid map3", data);
 	if (j + 1 >= 0 && j + 1 < data->map.width)
 		if (data->map.map[i][j + 1] != ' ' && data->map.map[i][j + 1] != '1'
 			&& data->map.map[i + 1][j] != '\0')
-			cub3D_error("Invalid map4", data);
+			cub3d_error("Invalid map4", data);
 }

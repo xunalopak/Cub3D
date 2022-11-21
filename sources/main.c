@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 23:35:12 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/17 00:44:19 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/21 19:34:17 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,27 @@ void	destroy_map(t_map *map)
 	free(map->map);
 }
 
+void	ft_exit(int exit_code, t_data *data)
+{
+	printf("BYE\n");
+	cleanup(data);
+	exit(exit_code);
+}
+
 void	cleanup(t_data *data)
 {
-	// if (win.west.img)
-	// 	mlx_destroy_image(win.mlx, win.west.img);
-	// if (win.east.img)
-	// 	mlx_destroy_image(win.mlx, win.east.img);
-	// if (win.north.img)
-	// 	mlx_destroy_image(win.mlx, win.north.img);
-	// if (win.south.img)
-	// 	mlx_destroy_image(win.mlx, win.south.img);
-	// if (win.data.img)
-	// 	mlx_destroy_image(win.mlx, win.data.img);
-	// if (win.win)
-	// 	mlx_destroy_window(win.mlx, win.win);
+	if (data->mlx.west.img)
+		mlx_destroy_image(data->mlx.mlx_ptr, data->mlx.west.img);
+	if (data->mlx.east.img)
+		mlx_destroy_image(data->mlx.mlx_ptr, data->mlx.east.img);
+	if (data->mlx.north.img)
+		mlx_destroy_image(data->mlx.mlx_ptr, data->mlx.north.img);
+	if (data->mlx.south.img)
+		mlx_destroy_image(data->mlx.mlx_ptr, data->mlx.south.img);
+	if (data->mlx.img.img)
+		mlx_destroy_image(data->mlx.mlx_ptr, data->mlx.img.img);
+	if (data->mlx.win_ptr)
+		mlx_destroy_window(data->mlx.mlx_ptr, data->mlx.win_ptr);
 	if (data->map.fd_ea)
 		free(data->map.fd_ea);
 	if (data->map.fd_no)
@@ -49,9 +56,10 @@ void	cleanup(t_data *data)
 		free(data->map.fd_we);
 	if (data->map.map)
 		destroy_map(&(data->map));
+	exit(0);
 }
 
-void	cub3D_error(char *str, t_data *data)
+void	cub3d_error(char *str, t_data *data)
 {
 	dprintf(2, "%s\n", str);
 	cleanup(data);
@@ -82,6 +90,13 @@ void	init_map(t_map *map)
 	map->flag = 0;
 }
 
+void	game(t_data *data)
+{
+	mlx_hook(data->mlx.win_ptr, KEY_PRESS, 1L << 0, key_press, data);
+	mlx_hook(data->mlx.win_ptr, KEY_RELEASE, 1L << 1, key_release, data);
+	mlx_hook(data->mlx.win_ptr, DESTROY_NOTIFY, 0, destroy_hook, data);
+}
+
 int	main(int ac, char **av)
 {
 	t_data	data;
@@ -103,6 +118,7 @@ int	main(int ac, char **av)
 	data_mlx_init(&(data.mlx));
 	load_texture(&data);
 	render(&data);
+	game(&data);
 	mlx_loop(data.mlx.mlx_ptr);
 	cleanup(&data);
 }
