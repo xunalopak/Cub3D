@@ -6,24 +6,13 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 23:35:12 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/21 19:34:17 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/21 21:42:06 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	destroy_map(t_map *map)
-{
-	int	i;
 
-	i = 0;
-	while (i < map->height)
-	{
-		free(map->map[i]);
-		i++;
-	}
-	free(map->map);
-}
 
 void	ft_exit(int exit_code, t_data *data)
 {

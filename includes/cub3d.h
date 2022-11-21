@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 03:58:15 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/21 19:34:36 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/21 21:42:30 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,7 @@ int			ft_parse_color(char **temp, t_data *data);
 void		ft_map(t_data *data);
 void		map_size(char *file, t_data *data);
 void		map_size_process(char *line, int *n, t_data *data);
+void		destroy_map(t_map *map);
 
 //Checker for parsing
 int			check1(char *line);

@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:52:34 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/21 19:20:52 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/21 21:42:10 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,17 @@ void	ft_map(t_data *data)
 		i++;
 	}
 	data->map.map[i] = 0;
+}
+
+void	destroy_map(t_map *map)
+{
+	int	i;
+
+	i = 0;
+	while (i < map->height)
+	{
+		free(map->map[i]);
+		i++;
+	}
+	free(map->map);
 }
