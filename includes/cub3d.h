@@ -90,10 +90,21 @@ typedef struct s_inter
 {
 	double	dst;
 	int		face;
-	double	pos1;
-	t_vec	pos2;
+	double	pos;
 	char	type;
 }			t_inter;
+
+typedef struct s_inter_data
+{
+	int		ix;
+	int		iy;
+	int		d_ix;
+	int		d_iy;
+	double	d_x;
+	double	d_y;
+	t_vec	pos;
+	int		axe;
+}			t_inter_data;
 
 typedef struct s_mlx
 {
@@ -188,9 +199,6 @@ void		texture_load(char *path, t_img *dest, t_data *data);
 //Get next line
 int			get_next_line(int fd, char **line, t_data *data);
 
-//Free and exit
-void		cub3d_error(char *str, t_data *data);
-
 //2d vector
 void		vec_norm(t_vec *vec);
 t_vec		vec_rot(t_vec const *vec, double cosa, double sina);
@@ -199,6 +207,7 @@ void		vec_add(t_vec *vec1, t_vec vec2);
 //mlx
 void		data_mlx_init(t_mlx	*mlx);
 void		render(t_data *data);
+t_inter		calc_dst(t_data	*data, t_vec dir);
 
 //Event hook
 int			key_press(int key, t_data *data);
@@ -206,6 +215,8 @@ int			key_release(int key, t_data *data);
 int			destroy_hook(t_data *data);
 int			game_loop(t_data *data);
 
+//Free and exit
+void		cub3d_error(char *str, t_data *data);
 void		cleanup(t_data *data);
 void		ft_exit(int exit_code, t_data *data);
 

@@ -44,73 +44,9 @@ static void	draw_column(t_data *data, int x, t_inter hit)
 		else if (height > 1.)
 			color = data->map.ceiling;
 		else
-			color = get_color_from_texture(data, hit.face, hit.pos1, height);
+			color = get_color_from_texture(data, hit.face, hit.pos, height);
 	img[i * data->mlx.win_x + x] = color;
 	}
-}
-
-static t_inter	calc_dst(t_data	*data, t_vec dir)
-{
-	t_inter	ret;
-	int		X;
-	int		Y;
-	int		dX;
-	int		dY;
-	double	dx;
-	double	dy;
-
-	X = (int)floor(data->player.pos.x);
-	Y = (int)floor(data->player.pos.y);
-	dX = 1;
-	dY = 1;
-	ret.dst = 0.;
-	ret.face = 0;
-	ret.pos1 = 0.;
-	ret.pos2.x = data->player.pos.x - (double)X;
-	ret.pos2.y = data->player.pos.y - (double)Y;
-	ret.type = data->map.map[Y][X];
-
-	if (dir.x < 0.)
-	{
-		dX = -1;
-		ret.pos2.x = 1. - ret.pos2.x;
-		dir.x = -dir.x;
-	}
-	if (dir.y < 0.)
-	{
-		dY = -1;
-		ret.pos2.y = 1. - ret.pos2.y;
-		dir.y = -dir.y;
-	}
-	while (ret.type == '0')
-	{
-		dx = (1. - ret.pos2.x) / dir.x;
-		dy = (1. - ret.pos2.y) / dir.y;
-		if (dx < dy)
-		{
-			ret.pos2.x = 0.;
-			ret.pos2.y += dx * dir.y;
-			ret.pos1 = ret.pos2.y;
-			ret.dst += dx;
-			X += dX;
-			ret.face = 1 - dX;
-		}
-		else
-		{
-			ret.pos2.x += dy * dir.x;
-			ret.pos2.y = 0.;
-			ret.pos1 = 1 - ret.pos2.x;
-			ret.dst += dy;
-			Y += dY;
-			ret.face = 2 - dY;
-		}
-		if (dX < 0)
-			ret.pos1 = 1 - ret.pos1;
-		if (dY < 0)
-			ret.pos1 = 1 - ret.pos1;
-		ret.type = data->map.map[Y][X];
-	}
-	return (ret);
 }
 
 void	render(t_data *data)
