@@ -74,13 +74,13 @@ t_inter	calc_dst(t_data	*data, t_vec dir)
 		tmp.d_y = (1. - tmp.pos.y) / dir.y;
 		if (tmp.d_x < tmp.d_y)
 		{
-			ret.dst += why(&tmp, 0., tmp.d_x * dir.y, tmp.d_x);
+			ret.dst += why(&tmp, 0., tmp.pos.y + tmp.d_x * dir.y, tmp.d_x);
 			tmp.ix += tmp.d_ix;
 			tmp.axe = 0;
 		}
 		else
 		{
-			ret.dst += why(&tmp, tmp.d_y * dir.x, 0., tmp.d_y);
+			ret.dst += why(&tmp, tmp.pos.x + tmp.d_y * dir.x, 0., tmp.d_y);
 			tmp.iy += tmp.d_iy;
 			tmp.axe = 1;
 		}

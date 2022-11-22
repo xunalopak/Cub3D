@@ -14,17 +14,17 @@
 
 static int	get_color_from_texture(t_data *data, int face, double x, double y)
 {
-	int const	X = (int)floor(x * 64.);
-	int const	Y = (int)floor((1 - y) * 64.);
+	int const	ix = (int)floor(x * 64.);
+	int const	iy = (int)floor((1 - y) * 64.);
 
 	if (face == 1)
-		return (data->mlx.north_array[X][Y]);
+		return (data->mlx.north_array[ix][iy]);
 	else if (face == 2)
-		return (data->mlx.east_array[X][Y]);
+		return (data->mlx.east_array[ix][iy]);
 	else if (face == 3)
-		return (data->mlx.south_array[X][Y]);
+		return (data->mlx.south_array[ix][iy]);
 	else
-		return (data->mlx.west_array[X][Y]);
+		return (data->mlx.west_array[ix][iy]);
 }
 
 static void	draw_column(t_data *data, int x, t_inter hit)
@@ -65,5 +65,6 @@ void	render(t_data *data)
 		hit = calc_dst(data, vec_rot(&ray, cosa, sina));
 		draw_column(data, i, hit);
 	}
-	mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.win_ptr, data->mlx.img.img, 0, 0);
+	mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.win_ptr,
+		data->mlx.img.img, 0, 0);
 }
