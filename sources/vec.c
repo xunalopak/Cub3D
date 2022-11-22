@@ -28,3 +28,9 @@ t_vec	vec_rot(t_vec const *vec, double cosa, double sina)
 	ret.y = vec->x * sina + vec->y * cosa;
 	return (ret);
 }
+
+void	vec_add(t_vec *vec1, t_vec vec2)
+{
+	vec1->x += vec2.x;
+	vec1->y += vec2.y;
+}

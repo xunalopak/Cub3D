@@ -84,6 +84,7 @@ void	game(t_data *data)
 	mlx_hook(data->mlx.win_ptr, KEY_PRESS, 1L << 0, key_press, data);
 	mlx_hook(data->mlx.win_ptr, KEY_RELEASE, 1L << 1, key_release, data);
 	mlx_hook(data->mlx.win_ptr, DESTROY_NOTIFY, 0, destroy_hook, data);
+	mlx_loop_hook(data->mlx.mlx_ptr, game_loop, data);
 }
 
 int	main(int ac, char **av)
@@ -91,8 +92,6 @@ int	main(int ac, char **av)
 	t_data	data;
 
 	ft_bzero(&data, sizeof(t_data));
-	//data.win.width = WIDTH;
-	//data.win.height = HEIGHT;
 	if (ac != 2)
 	{
 		ft_error("Wrong number of arguments");

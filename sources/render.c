@@ -36,11 +36,9 @@ static void	draw_column(t_data *data, int x, t_inter hit)
 
 	color = 0;
 	i = -1;
-//dprintf(2, "%f\n", hit.dst);
 	while (++i < data->mlx.win_y)
 	{
 		height = data->player.height + hit.dst * data->mlx.y_ray[i];
-//dprintf(2, "%f %f %f %f\n", data->player.height, hit.dst, data->mlx.y_ray[i], height);
 		if (height < 0.)
 			color = data->map.floor;
 		else if (height > 1.)
@@ -61,15 +59,15 @@ static t_inter	calc_dst(t_data	*data, t_vec dir)
 	double	dx;
 	double	dy;
 
-	X = (int)floor(data->player.x);
-	Y = (int)floor(data->player.y);
+	X = (int)floor(data->player.pos.x);
+	Y = (int)floor(data->player.pos.y);
 	dX = 1;
 	dY = 1;
 	ret.dst = 0.;
 	ret.face = 0;
 	ret.pos1 = 0.;
-	ret.pos2.x = data->player.x - (double)X;
-	ret.pos2.y = data->player.y - (double)Y;
+	ret.pos2.x = data->player.pos.x - (double)X;
+	ret.pos2.y = data->player.pos.y - (double)Y;
 	ret.type = data->map.map[Y][X];
 
 	if (dir.x < 0.)
@@ -84,9 +82,6 @@ static t_inter	calc_dst(t_data	*data, t_vec dir)
 		ret.pos2.y = 1. - ret.pos2.y;
 		dir.y = -dir.y;
 	}
-//dprintf(2, "xy %f %f\n", data->player.x, data->player.y);
-//dprintf(2, "XY %d %d #%c#\n", X, Y, ret.type);
-//dprintf(2, "dxy %f %f\n", dir.x, dir.y);
 	while (ret.type == '0')
 	{
 		dx = (1. - ret.pos2.x) / dir.x;
@@ -126,9 +121,6 @@ void	render(t_data *data)
 	t_inter			hit;
 	t_vec			ray;
 
-i = -1;
-while (data->map.map[++i])
-dprintf(2, "%s\n", data->map.map[i]);
 	ray.x = data->mlx.z;
 	i = -1;
 	while (++i < data->mlx.win_x)

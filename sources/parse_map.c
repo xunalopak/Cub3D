@@ -63,8 +63,8 @@ void	parse_m2(int i, int j, t_data *data)
 		data->player.count++;
 		if (data->player.count == 1)
 		{
-			data->player.x = .5 + (double)j;
-			data->player.y = .5 + (double)i;
+			data->player.pos.x = .5 + (double)j;
+			data->player.pos.y = .5 + (double)i;
 			data->player.height = PC_HEIGHT;
 			data->player.dir_symbol = data->map.map[i][j];
 			player_dir(data);

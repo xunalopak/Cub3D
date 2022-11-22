@@ -28,6 +28,8 @@
 # define WIN_WIDTH 800
 # define PC_HEIGHT .5
 # define PC_FOV 100.
+# define WALK_SPEED .03
+# define TURN_SPEED .02
 
 # if __APPLE__
 #  define KEY_W 13
@@ -112,8 +114,7 @@ typedef struct s_mlx
 
 typedef struct s_player
 {
-	double			x;
-	double			y;
+	t_vec			pos;
 	double			rot;
 	double			height;
 	char			dir_symbol;
@@ -189,6 +190,7 @@ void		cub3d_error(char *str, t_data *data);
 //2d vector
 void		vec_norm(t_vec *vec);
 t_vec		vec_rot(t_vec const *vec, double cosa, double sina);
+void		vec_add(t_vec *vec1, t_vec vec2);
 
 //mlx
 void		data_mlx_init(t_mlx	*mlx);
@@ -198,6 +200,7 @@ void		render(t_data *data);
 int			key_press(int key, t_data *data);
 int			key_release(int key, t_data *data);
 int			destroy_hook(t_data *data);
+int			game_loop(t_data *data);
 
 void		cleanup(t_data *data);
 void		ft_exit(int exit_code, t_data *data);
