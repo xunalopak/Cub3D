@@ -44,6 +44,25 @@ int	destroy_hook(t_data *data)
 	return (0);
 }
 
+static void	check_colition(t_data *data, t_vec *move)
+{
+	int	x;
+	int	y;
+
+	x = (int)floor(data->player.pos.x + move->x);
+	y = (int)floor(data->player.pos.y);
+	if (data->map.map[y][x] != '0')
+		move->x = 0;
+	x = (int)floor(data->player.pos.x);
+	y = (int)floor(data->player.pos.y + move->y);
+	if (data->map.map[y][x] != '0')
+		move->y = 0;
+	x = (int)floor(data->player.pos.x + move->x);
+	y = (int)floor(data->player.pos.y + move->y);
+	if (data->map.map[y][x] != '0')
+		move->x = 0;
+}
+
 int	game_loop(t_data *data)
 {
 	t_vec	move;
@@ -54,7 +73,9 @@ int	game_loop(t_data *data)
 		move.x = WALK_SPEED;
 	if (data->player.move == MOVE_DOWN)
 		move.x = -WALK_SPEED;
-	vec_add(&(data->player.pos), vec_rot(&move, cos(data->player.rot), sin(data->player.rot)));
+	move = vec_rot(&move, cos(data->player.rot), sin(data->player.rot));
+	check_colition(data, &move);
+	vec_add(&(data->player.pos), move);
 	if (data->player.turn == ROTATE_RIGHT)
 		data->player.rot += TURN_SPEED;
 	if (data->player.turn == ROTATE_LEFT)
