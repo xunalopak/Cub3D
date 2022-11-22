@@ -67,4 +67,6 @@ void	render(t_data *data)
 	}
 	mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.win_ptr,
 		data->mlx.img.img, 0, 0);
+	mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.win_ptr,
+		data->mlx.minimap.img, 0, 0);
 }

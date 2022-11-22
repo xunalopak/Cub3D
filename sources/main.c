@@ -44,6 +44,34 @@ void	game(t_data *data)
 	mlx_loop_hook(data->mlx.mlx_ptr, game_loop, data);
 }
 
+static void	draw_minimap(t_data *data)
+{
+	int	x;
+	int	color;
+	int	*img;
+	int	i;
+
+	data->mlx.minimap.img = mlx_new_image(data->mlx.mlx_ptr,
+			MAP_LV * data->map.width, MAP_LV * data->map.height);
+	data->mlx.minimap.addr = mlx_get_data_addr(data->mlx.minimap.img,
+			&(data->mlx.minimap.bpp), &(data->mlx.minimap.length),
+			&(data->mlx.minimap.endian));
+	img = (int *)data->mlx.minimap.addr;
+	x = -1;
+	while (++x < data->map.width * data->map.height)
+	{
+		if (data->map.map[x / data->map.width][x % data->map.width] == '0')
+			color = 0xffffff;
+		else
+			color = 0;
+		i = -1;
+		while (++i < MAP_LV * MAP_LV)
+			img[(MAP_LV * (x % data->map.width) + i % MAP_LV)
+				+ (MAP_LV * (x / data->map.width) + i / MAP_LV)
+				* MAP_LV * data->map.width] = color;
+	}
+}
+
 int	main(int ac, char **av)
 {
 	t_data	data;
@@ -61,6 +89,7 @@ int	main(int ac, char **av)
 	data.player.count = 0;
 	parse(av[1], &data);
 	data_mlx_init(&(data.mlx));
+	draw_minimap(&data);
 	load_texture(&data);
 	render(&data);
 	game(&data);

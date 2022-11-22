@@ -30,6 +30,7 @@
 # define PC_FOV 100.
 # define WALK_SPEED .03
 # define TURN_SPEED .03
+# define MAP_LV 5
 
 # if __APPLE__
 #  define KEY_W 13
@@ -117,6 +118,7 @@ typedef struct s_mlx
 	double			*y_ray;
 	double			z;
 	t_img			img;
+	t_img			minimap;
 	t_img			west;
 	t_img			east;
 	t_img			north;
