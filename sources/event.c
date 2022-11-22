@@ -78,6 +78,10 @@ int	game_loop(t_data *data)
 		move.x = WALK_SPEED;
 	if (data->player.move == MOVE_DOWN)
 		move.x = -WALK_SPEED;
+	if (data->player.move == MOVE_LEFT)
+		move.y = -WALK_SPEED;
+	if (data->player.move == MOVE_RIGHT)
+		move.y = WALK_SPEED;
 	move = vec_rot(&move, cos(data->player.rot), sin(data->player.rot));
 	check_colition(data, &move);
 	vec_add(&(data->player.pos), move);
