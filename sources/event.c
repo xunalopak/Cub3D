@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   event.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: rchampli <rchampli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 19:15:47 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/21 19:33:55 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/22 16:59:47 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@ int	key_press(int key, t_data *data)
 		data->player.move = MOVE_UP;
 	else if (key == KEY_S || key == KEY_DOWN)
 		data->player.move = MOVE_DOWN;
+	else if (key == KEY_E || key == KEY_RIGHT)
+		data->player.move = MOVE_RIGHT;
+	else if (key == KEY_Q || key == KEY_LEFT)
+		data->player.move = MOVE_LEFT;
 	else if (key == KEY_A)
 		data->player.turn = ROTATE_LEFT;
 	else if (key == KEY_D)
@@ -30,7 +34,8 @@ int	key_release(int key, t_data *data)
 	if (key == KEY_ESC)
 		cleanup(data);
 	else if (key == KEY_W || key == KEY_UP || key == KEY_S
-		|| key == KEY_DOWN)
+		|| key == KEY_DOWN || key == KEY_Q || key == KEY_LEFT
+		|| key == KEY_E || key == KEY_RIGHT)
 		data->player.move = 0;
 	else if (key == KEY_A || key == KEY_LEFT || key == KEY_D
 		|| key == KEY_RIGHT)
