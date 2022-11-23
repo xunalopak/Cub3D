@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rchampli <rchampli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 03:58:15 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/22 16:55:45 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/23 16:29:43 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@
 
 # define KEY_PRESS 2
 # define KEY_RELEASE 3
+# define MOUSE_MOVE 6
 # define DESTROY_NOTIFY 17
 
 //PLAYER MOVE CODE
@@ -138,6 +139,7 @@ typedef struct s_player
 	int				count;
 	int				move;
 	int				turn;
+	int				mouse_x;
 }					t_player;
 
 typedef struct s_map

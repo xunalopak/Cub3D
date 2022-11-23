@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:52:32 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/21 19:20:52 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/23 18:08:45 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,21 +68,27 @@ void	fill_map(char *line, int n, t_data *data)
 void	ft_parse(char *line, int n, t_data *data)
 {
 	char	**temp;
+	char	*old_temp;
+	int		x;
 
 	if (n >= 0 && n <= 5)
 	{
 		temp = ft_split(line, ' ');
-		if (temp[2] != NULL)
+		x = 2;
+		if (temp[x] != NULL)
 		{
-			free_matrix(temp);
-			cub3d_error("Invalid line of texture?", data);
+			while (temp[x])
+			{
+				old_temp = temp[1];
+				temp[1] = ft_strjoin(temp[1], temp[x++]);
+			}
 		}
 		if (parse_texture(temp, data))
 		{
 			free_matrix(temp);
 			cub3d_error("Invalid line of texture!", data);
 		}
-		return ;
+		(void)old_temp;
 	}
 	else if (n > 5)
 		fill_map(line, n - 6, data);

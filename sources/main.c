@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 23:35:12 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/21 21:42:06 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/23 16:35:13 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,24 @@ void	init_map(t_map *map)
 	map->flag = 0;
 }
 
+int	mouse_move(int x, int y, t_data *data)
+{
+	(void)y;
+	if (data->player.mouse_x < x)
+		data->player.turn = ROTATE_LEFT;
+	else if (data->player.mouse_x > x)
+		data->player.turn = ROTATE_RIGHT;
+	else
+		data->player.turn = 0;
+	data->player.mouse_x = x;
+	return (0);
+}
+
 void	game(t_data *data)
 {
 	mlx_hook(data->mlx.win_ptr, KEY_PRESS, 1L << 0, key_press, data);
 	mlx_hook(data->mlx.win_ptr, KEY_RELEASE, 1L << 1, key_release, data);
+	mlx_hook(data->mlx.win_ptr, MOUSE_MOVE, 1L << 6, mouse_move, data);
 	mlx_hook(data->mlx.win_ptr, DESTROY_NOTIFY, 0, destroy_hook, data);
 	mlx_loop_hook(data->mlx.mlx_ptr, game_loop, data);
 }

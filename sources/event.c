@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   event.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rchampli <rchampli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 19:15:47 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/22 16:59:47 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/23 15:44:16 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ int	key_press(int key, t_data *data)
 		data->player.move = MOVE_UP;
 	else if (key == KEY_S || key == KEY_DOWN)
 		data->player.move = MOVE_DOWN;
-	else if (key == KEY_E || key == KEY_RIGHT)
+	else if (key == KEY_D || key == KEY_RIGHT)
 		data->player.move = MOVE_RIGHT;
-	else if (key == KEY_Q || key == KEY_LEFT)
+	else if (key == KEY_A || key == KEY_LEFT)
 		data->player.move = MOVE_LEFT;
-	else if (key == KEY_A)
+	else if (key == KEY_Q)
 		data->player.turn = ROTATE_LEFT;
-	else if (key == KEY_D)
+	else if (key == KEY_E)
 		data->player.turn = ROTATE_RIGHT;
 	return (0);
 }
@@ -34,11 +34,10 @@ int	key_release(int key, t_data *data)
 	if (key == KEY_ESC)
 		cleanup(data);
 	else if (key == KEY_W || key == KEY_UP || key == KEY_S
-		|| key == KEY_DOWN || key == KEY_Q || key == KEY_LEFT
-		|| key == KEY_E || key == KEY_RIGHT)
+		|| key == KEY_DOWN || key == KEY_A || key == KEY_LEFT
+		|| key == KEY_D || key == KEY_RIGHT)
 		data->player.move = 0;
-	else if (key == KEY_A || key == KEY_LEFT || key == KEY_D
-		|| key == KEY_RIGHT)
+	else if (key == KEY_Q || key == KEY_E)
 		data->player.turn = 0;
 	return (0);
 }
