@@ -23,7 +23,7 @@ char	*ft_strjoin(char *left_str, char *buff)
 	{
 		left_str = ft_strlen(s1);
 		buff = ft_strlen(s2);
-		str = (char*)malloc(sizeof(char) * (left_str + buff + 1));
+		str = (char *)malloc(sizeof(char) * (left_str + buff + 1));
 		if (str == NULL)
 			return (NULL);
 		i = -1;
