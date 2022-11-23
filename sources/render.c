@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 11:47:07 by jalamell          #+#    #+#             */
-/*   Updated: 2022/11/17 00:15:14 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/23 18:46:47 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	draw_column(t_data *data, int x, t_inter hit)
 			color = data->map.ceiling;
 		else
 			color = get_color_from_texture(data, hit.face, hit.pos, height);
-	img[i * data->mlx.win_x + x] = color;
+		img[i * data->mlx.win_x + x] = color;
 	}
 }
 

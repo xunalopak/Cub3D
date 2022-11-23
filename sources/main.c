@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 23:35:12 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/23 18:50:43 by jalamell         ###   ########lyon.fr   */
+/*   Updated: 2022/11/23 19:18:06 by jalamell         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	game(t_data *data)
 {
 	mlx_hook(data->mlx.win_ptr, KEY_PRESS, 1L << 0, key_press, data);
 	mlx_hook(data->mlx.win_ptr, KEY_RELEASE, 1L << 1, key_release, data);
+	mlx_hook(data->mlx.win_ptr, MOUSE_MOVE, 1L << 6, mouse_move, data);
 	mlx_hook(data->mlx.win_ptr, DESTROY_NOTIFY, 0, destroy_hook, data);
 	mlx_loop_hook(data->mlx.mlx_ptr, game_loop, data);
 }
@@ -81,6 +82,7 @@ static void	init_player(t_player *player)
 	player->move_r = 0;
 	player->turn_l = 0;
 	player->turn_r = 0;
+	player->mouse_x = 0;
 }
 
 int	main(int ac, char **av)

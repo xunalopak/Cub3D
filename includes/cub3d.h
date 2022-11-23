@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rchampli <rchampli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 03:58:15 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/23 18:35:27 by jalamell         ###   ########lyon.fr   */
+/*   Updated: 2022/11/23 19:31:05 by jalamell         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@
 
 # define KEY_PRESS 2
 # define KEY_RELEASE 3
+# define MOUSE_MOVE 6
 # define DESTROY_NOTIFY 17
 
 //PLAYER MOVE CODE
@@ -147,6 +148,7 @@ typedef struct s_player
 	int				turn_l;
 	int				turn_r;
 	double			jmp;
+	int				mouse_x;
 }					t_player;
 
 typedef struct s_map
@@ -187,6 +189,7 @@ int			parse_m(t_data *data);
 void		parse_m2(int i, int j, t_data *data);
 void		player_dir(t_data *data);
 void		ft_parse(char *line, int n, t_data *data);
+void		ft_parse2(char **temp);
 void		fill_map(char *line, int n, t_data *data);
 int			parse_texture(char **temp, t_data *data);
 int			parse_texture2(char **temp, t_data *data);
@@ -219,10 +222,12 @@ void		vec_add(t_vec *vec1, t_vec vec2);
 void		data_mlx_init(t_mlx	*mlx);
 void		render(t_data *data);
 t_inter		calc_dst(t_data	*data, t_vec dir);
+void		check_colition(t_data *data, t_vec *move);
 
 //Event hook
 int			key_press(int key, t_data *data);
 int			key_release(int key, t_data *data);
+int			mouse_move(int x, int y, t_data *data);
 int			destroy_hook(t_data *data);
 int			game_loop(t_data *data);
 

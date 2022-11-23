@@ -6,11 +6,30 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 11:47:07 by jalamell          #+#    #+#             */
-/*   Updated: 2022/11/17 00:15:14 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/23 19:30:47 by jalamell         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	check_colition(t_data *data, t_vec *move)
+{
+	int	x;
+	int	y;
+
+	x = (int)floor(data->player.pos.x + move->x);
+	y = (int)floor(data->player.pos.y);
+	if (data->map.map[y][x] != '0')
+		move->x = 0;
+	x = (int)floor(data->player.pos.x);
+	y = (int)floor(data->player.pos.y + move->y);
+	if (data->map.map[y][x] != '0')
+		move->y = 0;
+	x = (int)floor(data->player.pos.x + move->x);
+	y = (int)floor(data->player.pos.y + move->y);
+	if (data->map.map[y][x] != '0')
+		move->x = 0;
+}
 
 static void	init_tmp(t_data *data, t_inter *ret, t_inter_data *tmp, t_vec *dir)
 {

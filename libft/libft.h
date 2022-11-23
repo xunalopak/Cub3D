@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 14:43:46 by rchampli          #+#    #+#             */
-/*   Updated: 2021/10/11 14:43:46 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/23 19:06:29 by jalamell         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
-//# include "../includes/cub3d.h"
 
 void	*ft_memset(void *s, int c, size_t n);
 void	ft_bzero(void *s, size_t n);
@@ -47,7 +46,7 @@ int		ft_atoi(const char *str);
 void	*ft_calloc(size_t nmemb, size_t size);
 char	*ft_strdup(char *s);
 char	*ft_substr(char *s, unsigned int start, int len);
-char	*ft_strjoin(char *left_str, char *buff);
+char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strtrim(char *s1, char *set);
 char	**ft_split(char *s, char c);
 char	*ft_itoa(int n);
