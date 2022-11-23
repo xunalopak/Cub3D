@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:52:32 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/23 18:35:11 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/23 18:44:45 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,23 +63,6 @@ void	fill_map(char *line, int n, t_data *data)
 		i++;
 	}
 	data->map.map[n][i] = '\0';
-}
-
-void	ft_parse2(char **temp)
-{
-	char	*old_temp;
-	int		x;
-
-	x = 2;
-	if (temp[x] != NULL)
-	{
-		while (temp[x])
-		{
-			old_temp = temp[1];
-			temp[1] = ft_strjoin(temp[1], temp[x++]);
-		}
-	}
-	(void)old_temp;
 }
 
 void	ft_parse(char *line, int n, t_data *data)
