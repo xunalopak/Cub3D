@@ -59,7 +59,7 @@
 #  define KEY_UP 65362
 #  define KEY_DOWN 65364
 #  define KEY_ESC 65307
-#  define KEY_SPC 97
+#  define KEY_SPC 32
 # endif
 
 # define KEY_PRESS 2
