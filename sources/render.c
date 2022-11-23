@@ -49,6 +49,22 @@ static void	draw_column(t_data *data, int x, t_inter hit)
 	}
 }
 
+static void	color_player(t_data *data, int color)
+{
+	int			i;
+	int *const	img = (int *)data->mlx.minimap.addr;
+	int			x;
+	int			y;
+
+	x = (int)floor(data->player.pos.x);
+	y = (int)floor(data->player.pos.y);
+	i = -1;
+	while (++i < MAP_LV * MAP_LV)
+		img[(MAP_LV * (x) + i % MAP_LV)
+			+ (MAP_LV * (y) + i / MAP_LV)
+			* MAP_LV * data->map.width] = color;
+}
+
 void	render(t_data *data)
 {
 	int				i;
@@ -67,6 +83,8 @@ void	render(t_data *data)
 	}
 	mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.win_ptr,
 		data->mlx.img.img, 0, 0);
+	color_player(data, 0xff0000);
 	mlx_put_image_to_window(data->mlx.mlx_ptr, data->mlx.win_ptr,
 		data->mlx.minimap.img, 0, 0);
+	color_player(data, 0xffffff);
 }
