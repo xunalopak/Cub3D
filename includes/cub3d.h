@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 03:58:15 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/22 16:55:45 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/23 18:35:27 by jalamell         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # define WALK_SPEED .03
 # define TURN_SPEED .03
 # define MAP_LV 5
+# define JMP .02
+# define ACC .0006666666
 
 # if __APPLE__
 #  define KEY_W 13
@@ -44,6 +46,7 @@
 #  define KEY_UP 126
 #  define KEY_DOWN 125
 #  define KEY_ESC 53
+#  define KEY_SPC 49
 # elif __linux__
 #  define KEY_W 119
 #  define KEY_A 97
@@ -56,6 +59,7 @@
 #  define KEY_UP 65362
 #  define KEY_DOWN 65364
 #  define KEY_ESC 65307
+#  define KEY_SPC 97
 # endif
 
 # define KEY_PRESS 2
@@ -136,8 +140,13 @@ typedef struct s_player
 	double			height;
 	char			dir_symbol;
 	int				count;
-	int				move;
-	int				turn;
+	int				move_u;
+	int				move_d;
+	int				move_l;
+	int				move_r;
+	int				turn_l;
+	int				turn_r;
+	double			jmp;
 }					t_player;
 
 typedef struct s_map

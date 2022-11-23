@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 19:15:47 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/22 16:59:47 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/23 18:47:06 by jalamell         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,19 @@
 int	key_press(int key, t_data *data)
 {
 	if (key == KEY_W || key == KEY_UP)
-		data->player.move = MOVE_UP;
+		data->player.move_u = MOVE_UP;
 	else if (key == KEY_S || key == KEY_DOWN)
-		data->player.move = MOVE_DOWN;
+		data->player.move_d = MOVE_DOWN;
 	else if (key == KEY_E || key == KEY_RIGHT)
-		data->player.move = MOVE_RIGHT;
+		data->player.move_r = MOVE_RIGHT;
 	else if (key == KEY_Q || key == KEY_LEFT)
-		data->player.move = MOVE_LEFT;
+		data->player.move_l = MOVE_LEFT;
 	else if (key == KEY_A)
-		data->player.turn = ROTATE_LEFT;
+		data->player.turn_l = ROTATE_LEFT;
 	else if (key == KEY_D)
-		data->player.turn = ROTATE_RIGHT;
+		data->player.turn_r = ROTATE_RIGHT;
+	else if (key == KEY_SPC && data->player.height < PC_HEIGHT + .0001)
+		data->player.jmp = JMP;
 	return (0);
 }
 
@@ -33,13 +35,18 @@ int	key_release(int key, t_data *data)
 {
 	if (key == KEY_ESC)
 		cleanup(data);
-	else if (key == KEY_W || key == KEY_UP || key == KEY_S
-		|| key == KEY_DOWN || key == KEY_Q || key == KEY_LEFT
-		|| key == KEY_E || key == KEY_RIGHT)
-		data->player.move = 0;
-	else if (key == KEY_A || key == KEY_LEFT || key == KEY_D
-		|| key == KEY_RIGHT)
-		data->player.turn = 0;
+	else if (key == KEY_W || key == KEY_UP)
+		data->player.move_u = 0;
+	else if (key == KEY_S || key == KEY_DOWN)
+		data->player.move_d = 0;
+	else if (key == KEY_E || key == KEY_RIGHT)
+		data->player.move_r = 0;
+	else if (key == KEY_Q || key == KEY_LEFT)
+		data->player.move_l = 0;
+	else if (key == KEY_A)
+		data->player.turn_l = 0;
+	else if (key == KEY_D)
+		data->player.turn_r = 0;
 	return (0);
 }
 
@@ -74,20 +81,24 @@ int	game_loop(t_data *data)
 
 	move.x = 0.;
 	move.y = 0.;
-	if (data->player.move == MOVE_UP)
-		move.x = WALK_SPEED;
-	if (data->player.move == MOVE_DOWN)
-		move.x = -WALK_SPEED;
-	if (data->player.move == MOVE_LEFT)
-		move.y = -WALK_SPEED;
-	if (data->player.move == MOVE_RIGHT)
-		move.y = WALK_SPEED;
+	if (data->player.move_u == MOVE_UP)
+		move.x += WALK_SPEED;
+	if (data->player.move_d == MOVE_DOWN)
+		move.x += -WALK_SPEED;
+	if (data->player.move_l == MOVE_LEFT)
+		move.y += -WALK_SPEED;
+	if (data->player.move_r == MOVE_RIGHT)
+		move.y += WALK_SPEED;
 	move = vec_rot(&move, cos(data->player.rot), sin(data->player.rot));
 	check_colition(data, &move);
+	data->player.jmp -= ACC;
+	data->player.height += data->player.jmp;
+	if (data->player.height < .5)
+		data->player.height = .5;
 	vec_add(&(data->player.pos), move);
-	if (data->player.turn == ROTATE_RIGHT)
+	if (data->player.turn_r == ROTATE_RIGHT)
 		data->player.rot += TURN_SPEED;
-	if (data->player.turn == ROTATE_LEFT)
+	if (data->player.turn_l == ROTATE_LEFT)
 		data->player.rot -= TURN_SPEED;
 	render(data);
 	return (0);

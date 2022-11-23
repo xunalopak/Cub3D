@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 23:35:12 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/21 21:42:06 by rchampli         ###   ########.fr       */
+/*   Updated: 2022/11/23 18:50:43 by jalamell         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,17 @@ static void	draw_minimap(t_data *data)
 	}
 }
 
+static void	init_player(t_player *player)
+{
+	player->jmp = 0.;
+	player->move_u = 0;
+	player->move_d = 0;
+	player->move_l = 0;
+	player->move_r = 0;
+	player->turn_l = 0;
+	player->turn_r = 0;
+}
+
 int	main(int ac, char **av)
 {
 	t_data	data;
@@ -88,6 +99,7 @@ int	main(int ac, char **av)
 	init_map(&(data.map));
 	data.player.count = 0;
 	parse(av[1], &data);
+	init_player(&(data.player));
 	data_mlx_init(&(data.mlx));
 	draw_minimap(&data);
 	load_texture(&data);
