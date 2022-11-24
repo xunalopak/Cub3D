@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 03:58:15 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/23 19:31:05 by jalamell         ###   ########lyon.fr   */
+/*   Updated: 2022/11/24 14:00:57 by jalamell         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define WIN_HEIGHT 800
 # define WIN_WIDTH 800
 # define PC_HEIGHT .5
+# define PC_WIDTH .05
 # define PC_FOV 100.
 # define WALK_SPEED .03
 # define TURN_SPEED .03

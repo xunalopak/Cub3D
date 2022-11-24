@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 11:47:07 by jalamell          #+#    #+#             */
-/*   Updated: 2022/11/23 19:30:47 by jalamell         ###   ########lyon.fr   */
+/*   Updated: 2022/11/24 14:27:11 by jalamell         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,29 @@
 
 void	check_colition(t_data *data, t_vec *move)
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
+	double	dx;
+	double	dy;
 
-	x = (int)floor(data->player.pos.x + move->x);
+	dx = PC_WIDTH;
+	dy = PC_WIDTH;
+	if (move->x < 0.)
+		dx = -PC_WIDTH;
+	if (move->y < 0.)
+		dy = -PC_WIDTH;
+	x = (int)floor(data->player.pos.x + move->x + dx);
 	y = (int)floor(data->player.pos.y);
 	if (data->map.map[y][x] != '0')
 		move->x = 0;
 	x = (int)floor(data->player.pos.x);
-	y = (int)floor(data->player.pos.y + move->y);
+	y = (int)floor(data->player.pos.y + move->y + dy);
 	if (data->map.map[y][x] != '0')
 		move->y = 0;
-	x = (int)floor(data->player.pos.x + move->x);
-	y = (int)floor(data->player.pos.y + move->y);
+	if (data->map.map[y][x] != '0')
+		dy = 0.;
+	x = (int)floor(data->player.pos.x + move->x + dx);
+	y = (int)floor(data->player.pos.y + move->y + dy);
 	if (data->map.map[y][x] != '0')
 		move->x = 0;
 }
