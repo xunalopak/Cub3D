@@ -6,7 +6,7 @@
 /*   By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 03:58:15 by rchampli          #+#    #+#             */
-/*   Updated: 2022/11/24 14:00:57 by jalamell         ###   ########lyon.fr   */
+/*   Updated: 2022/11/27 22:01:00 by rchampli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,6 @@ int			parse_m(t_data *data);
 void		parse_m2(int i, int j, t_data *data);
 void		player_dir(t_data *data);
 void		ft_parse(char *line, int n, t_data *data);
-void		ft_parse2(char **temp);
 void		fill_map(char *line, int n, t_data *data);
 int			parse_texture(char **temp, t_data *data);
 int			parse_texture2(char **temp, t_data *data);

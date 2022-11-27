@@ -6,17 +6,17 @@
 #    By: rchampli <rchampli@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/18 04:05:51 by rchampli          #+#    #+#              #
-#    Updated: 2022/11/24 14:52:32 by jalamell         ###   ########lyon.fr    #
+#    Updated: 2022/11/27 22:04:41 by rchampli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = Cub3D
 
-SRCS = checker.c data_mlx_init.c event.c get_next_line.c intersect.c main.c parse_map.c parsing.c parsing_2.c parsing_util.c quit.c render.c texture.c vec.c
+SRCS = checker.c data_mlx_init.c event.c get_next_line.c intersect.c main.c parse_map.c parsing.c parsing_2.c quit.c render.c texture.c vec.c
 
 CC = gcc
 
-CFLAG = -Wall -Wextra -Werror -MD -O3 #-g -fsanitize=address
+CFLAG = -Wall -Wextra -Werror -MD -O3 -g -fsanitize=address
 LINFLAG = -lm -lbsd -lX11 -lXext
 MACFLAG = -framework OpenGL -framework AppKit
 
